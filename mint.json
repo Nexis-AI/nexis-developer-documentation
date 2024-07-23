@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Nexis Network Docs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -18,7 +18,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:build@nexislabs.io"
     }
   ],
   "topbarCtaButton": {
@@ -54,6 +54,7 @@
     {
       "group": "Ecosystem",
       "pages": [
+        "products/nexwallet",
         "products/wallet",
         "products/bridge",
         "products/swap",
