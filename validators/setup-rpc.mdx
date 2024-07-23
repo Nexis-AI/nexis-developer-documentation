@@ -1,0 +1,83 @@
+---
+title: Running RPC Node
+icon: "globe"
+---
+<Note>
+Follow this guide to setup Nexis RPC on Devnet, You can do the same on Mainnet once it is live.
+</Note>
+
+## Requirements
+- Nexis CLI
+- System should be tuned
+
+If any of the above requirements are not met, follow from the following:
+<CardGroup cols={2}>
+  <Card
+    title="Nexis CLI"
+    icon="code"
+    href="/quickstart"
+  >
+    Install Command Line Interface
+  </Card>
+    <Card
+    title="System Tuning"
+    icon="stars"
+    href="/validators/system-tuning"
+  >
+    Tune system for running Validators
+  </Card>
+
+</CardGroup>
+
+## Change Nexis CLI configurations
+
+Run the following command to point to devnet
+
+```
+nexis config set --url http://api.devnet.nexis.network:8899
+```
+
+<Note> Once the Mainnet will be live you will have to set the configuration to use mainnet native rpc url instead of this one</Note>
+
+## Generate the keypairs
+
+
+1. Validator keypair
+
+```bash
+   nexis-keygen new -o ~/validator-keypair.json
+```
+
+## Fund Validator address
+
+```
+nexis airdrop 10 ~/validator-keypair.json
+```
+
+## Start validator
+
+Now run the following command to start the validator
+
+```
+nexis-validator \
+        --known-validator 5vXaeXtVESpVsA15L4cnce2ZMXvNEVDwfseY34VVK6EB \
+        --known-validator HnTZjQX7xUp3hyVACB8FeAdAE3MDAdUUBcVDxFSJpYbZ \
+        --entrypoint http://api.devnet.nexis.network:8000 \
+        --expected-shred-version 30005 \
+        --expected-genesis-hash 8EXN9mquvw6otwQFBJpCed4nk3aM774SPxQjhosDA44U \
+         --only-known-rpc \
+        --full-rpc-api \
+        --no-voting \
+        --identity ~/validator-keypair.json \
+        --ledger ~/ledger/ \
+        --rpc-bind-address 0.0.0.0 \
+        --private-rpc \
+        --dynamic-port-range 8000-10000 \
+        --rpc-port 8899 \
+        --log ~/nexis-validator.log \
+        --no-poh-speed-test \
+        --wal-recovery-mode skip_any_corrupted_record \
+        --limit-ledger-size 50000000
+```
+
+Voila! Your RPC Node is running now, wait for few minutes and it should be started on port `8899`.
