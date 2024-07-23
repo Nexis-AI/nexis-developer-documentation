@@ -25,17 +25,11 @@
     "name": "Dashboard",
     "url": "https://dashboard.mintlify.com"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "anchors": [
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://docs.nexis.network/"
     },
     {
       "name": "Community",
@@ -53,12 +47,13 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "why-nexis",
         "quickstart",
         "development"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Ecosystem",
       "pages": [
         "essentials/markdown",
         "essentials/code",
