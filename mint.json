@@ -54,8 +54,8 @@
     {
       "group": "Ecosystem",
       "pages": [
+        "products/wallet",
         "products/markdown",
-        "products/code",
         "products/images",
         "products/settings",
         "products/navigation",
