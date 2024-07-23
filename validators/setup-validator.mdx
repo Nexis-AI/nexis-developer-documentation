@@ -1,0 +1,133 @@
+---
+title: Running Validator
+icon: "heart-circle-check"
+---
+<Note>
+Follow this guide to setup Nexis Validator on Devnet, You can do the same on Mainnet once it is live.
+</Note>
+
+## Requirements
+- Nexis CLI
+- System should be tuned
+
+If any of the above requirements are not met, follow from the following:
+<CardGroup cols={2}>
+  <Card
+    title="Nexis CLI"
+    icon="code"
+    href="/quickstart"
+  >
+    Install Command Line Interface
+  </Card>
+    <Card
+    title="System Tuning"
+    icon="stars"
+    href="/validators/system-tuning"
+  >
+    Tune system for running Validators
+  </Card>
+
+</CardGroup>
+
+## Change Nexis CLI configurations
+
+Run the following command to point to devnet
+
+```
+nexis config set --url http://api.devnet.nexis.network:8899
+```
+
+<Note> Once the Mainnet will be live you will have to set the configuration to use mainnet native rpc url instead of this one</Note>
+
+## Generate the keypairs
+
+
+1. Validator keypair
+
+```bash
+   nexis-keygen new -o ~/validator-keypair.json
+```
+
+2. Vote account keypair
+
+```bash
+    nexis-keygen new -o ~/vote-keypair.json
+```
+
+3. Withdraw keypair
+
+```bash
+    nexis-keygen new -o ~/withdraw-keypair.json
+```
+
+## Fund Validator address
+
+```
+nexis airdrop 10 ~/validator-keypair.json
+```
+
+## Create vote account
+
+Set validator keypair as default keypair for Nexis CLI
+
+```
+nexis config set --keypair ~/validator-keypair.json
+```
+
+Create a vote account
+
+```
+nexis create-vote-account --commission 8 ~/vote-keypair.json ~/validator-keypair.json ~/withdraw-keypair.json
+```
+
+## Start validator
+
+Now run the following command to start the validator
+
+```
+nexis-validator \
+        --known-validator 5vXaeXtVESpVsA15L4cnce2ZMXvNEVDwfseY34VVK6EB \
+        --known-validator HnTZjQX7xUp3hyVACB8FeAdAE3MDAdUUBcVDxFSJpYbZ \
+        --entrypoint http://api.devnet.nexis.network:8000 \
+        --expected-shred-version 30005 \
+        --expected-genesis-hash 8EXN9mquvw6otwQFBJpCed4nk3aM774SPxQjhosDA44U \
+        --snapshot-interval-slots 300 \
+        --full-snapshot-interval-slots 3000 \
+        --identity ~/validator-keypair.json \
+        --vote-account ~/vote-keypair.json \
+        --ledger ~/ledger/ \
+        --dynamic-port-range 8000-10000 \
+        --rpc-port 8899 \
+        --log ~/nexis-validator.log \
+        --no-poh-speed-test \
+        --limit-ledger-size 50000000 \
+        --log ~/nexis-validator.log
+```
+
+Voila! Your validator is running now, wait for few minutes and it should be visible in the validators list.
+
+You can check it by running the following command 
+
+```
+nexis validators
+```
+
+It should output something like this 
+
+```
+  Identity                                      Vote Account                            Commission  Last Vote        Root Slot     Skip Rate  Credits  Version    Active Stake
+  6sfoXMhgqc9cft256xqWEmJaAQYQ63sd6k7412JNq6Hz  4tLeMbHGdQAWJjZsEgFNsc6gLu6VAQM2zzJsqQXARVpL    8%     154429 (  0)     154398 (  0)    -       23388    0.7.0         0.000000000 NZT (0.00%)
+  GqQ9UHo1tEsnAxAJQqbyuJtkgfkGt2oLzKv6fVsjcL41  EbtdDPaXC7Q5YxUG1GewAkEzWR7xQyh6TP5PtBG9VKQk    8%     154429 (  0)     154398 (  0)   0.00%    23391    0.7.0    166707.392939848 NZT (100.00%)
+Majority count: 0%
+
+Average Stake-Weighted Skip Rate: 0.00%
+Average Unweighted Skip Rate:     0.00%
+
+Active Stake: 166707.392939848 NZT
+
+Stake By Version:
+0.7.0    -    2 current validators (100.00%)
+
+```
+
+Remember that your Validator's stake will become active in next epoch.

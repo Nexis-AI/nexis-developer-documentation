@@ -64,7 +64,9 @@
       "group": "Validators",
       "pages": [
         "validators/introduction",
-        "validators/rpc-node"
+        "validators/rpc-node",
+        "validators/system-tuning",
+        "validators/setup-validator"
       ]
     }
   ],
