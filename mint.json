@@ -57,9 +57,7 @@
         "products/wallet",
         "products/bridge",
         "products/swap",
-        "products/names",
-        "products/navigation",
-        "products/reusable-snippets"
+        "products/names"
       ]
     }
   ],
