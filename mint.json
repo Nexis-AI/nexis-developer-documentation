@@ -52,6 +52,12 @@
       ]
     },
     {
+      "group": "Nexis Network",
+      "pages": [
+        "nexis/why-nexis"
+      ]
+    },
+    {
       "group": "Ecosystem",
       "pages": [
         "products/nexwallet",
