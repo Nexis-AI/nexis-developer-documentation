@@ -59,6 +59,13 @@
         "products/swap",
         "products/names"
       ]
+    },
+    {
+      "group": "Validators",
+      "pages": [
+        "validators/introduction",
+        "validators/rpc-node"
+      ]
     }
   ],
   "footerSocials": {
