@@ -47,7 +47,6 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "why-nexis",
         "quickstart",
         "development"
       ]
