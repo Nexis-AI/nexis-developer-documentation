@@ -26,38 +26,27 @@ In this section we will tell how you can get free devnet NZTs on Nexis Devnet fo
 
 </CardGroup>
 
-## Sending tokens to Native Address
-To send transaction to any native address you need address of recipient and the amount to transfer.
+## Airdrop on Native Chain
+To claim free devnet tokens on Nexis Network Devnet Native chain
 
+Set Nexis Network Devnet RPC url in the Nexis config
 ```bash
-$ nexis transfer
-error: The following required arguments were not provided:
-    <RECIPIENT_ADDRESS>
-    <AMOUNT>
-
-USAGE:
-    nexis transfer <RECIPIENT_ADDRESS> <AMOUNT> --config <FILEPATH>
-
-For more information try --help
+nexis config set --url https://evm-devnet.nexis.network
 ```
 
-For example: Sending `10 NZTs` to `Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK`
-
 ```bash
-nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10
+nexis airdrop 10
 ```
 
-If the recipient doesn't have any tokens, then you will need to pass an additional flag with the above command, like this 
-
-```bash
-nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10 --allow-unfunded-recipient
-```
-
-## Sending tokens to EVM Address
-To send transaction to any evm address you need address of recipient and the amount to transfer.
-
-For example: Sending `10 NZTs` to `0xf50860558A66C7cF0C5bbE44C8f2683A48C22189`
+You can also bridge these tokens to EVM Devnet
 
 ```bash
 nexis evm transfer-to-evm 0xf50860558A66C7cF0C5bbE44C8f2683A48C22189 10
 ```
+
+## Airdrop on Nexis Network EVM (Devnet)
+You can not airdrop EVM tokens directly from Nexis CLI but you can bridge them by requesting them on [Native Chain](#airdrop-on-native-chain)
+
+You can use [Devnet Faucet UI](https://evm-faucet-devnet.nexscan.io) for claiming Devnet tokens by entering your EVM Address
+
+<img height="200" src="/images/faucet/1.png" />
