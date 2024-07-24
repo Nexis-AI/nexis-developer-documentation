@@ -70,6 +70,7 @@
       "group": "Validators",
       "pages": [
         "validators/introduction",
+        "validators/delegate",
         "validators/rpc-node",
         "validators/system-tuning",
         "validators/setup-validator",
