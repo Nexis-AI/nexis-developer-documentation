@@ -36,6 +36,11 @@
       "url": "https://t.me/Nexis_Network/682450"
     },
     {
+      "name": "Status",
+      "icon": "signal-bars",
+      "url": "https://status.nexis.network/status/nexis"
+    },
+    {
       "name": "Blog",
       "icon": "newspaper",
       "url": "https://blog.nexis.network/"
