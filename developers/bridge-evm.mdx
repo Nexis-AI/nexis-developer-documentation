@@ -1,0 +1,24 @@
+---
+title: 'Bridge to EVM'
+icon: "link"
+---
+In this section we will tell you how to bridge native NZT tokens to EVM
+
+## Prerequisites
+<CardGroup cols={1}>
+
+  <Card title="Command Line Interface" icon="terminal" href="/quickstart">
+   Nexis CLI should be installed
+  </Card>
+
+</CardGroup>
+
+
+## Bridging tokens to EVM Address
+To send transaction to your evm address you need your EVM Address and the amount to transfer.
+
+For example: Sending `10 NZTs` to `0xf50860558A66C7cF0C5bbE44C8f2683A48C22189`
+
+```bash
+nexis evm transfer-to-evm 0xf50860558A66C7cF0C5bbE44C8f2683A48C22189 10
+```

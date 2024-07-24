@@ -62,7 +62,8 @@
     {
       "group": "Developers",
       "pages": [
-        "developers/make-tx"
+        "developers/make-tx",
+        "developers/bridge-evm"
       ]
     },
     {
