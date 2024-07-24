@@ -11,7 +11,7 @@ In this section we will explain how you can use Nexis CLI to make:
    Transfering native NZT tokens
   </Card>
 
-  <Card title="EVM Transactions" icon="link" href="#nexis-zkevm-testnet">
+  <Card title="EVM Transactions" icon="link" href="#sending-tokens-to-evm-address">
    Bridging/Sending to EVM Address
   </Card>
 
@@ -51,4 +51,13 @@ If the recipient doesn't have any tokens, then you will need to pass an addition
 
 ```bash
 nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10 --allow-unfunded-recipient
+```
+
+## Sending tokens to EVM Address
+To send transaction to any evm address you need address of recipient and the amount to transfer.
+
+For example: Sending `10 NZTs` to `0xf50860558A66C7cF0C5bbE44C8f2683A48C22189`
+
+```bash
+nexis evm transfer-to-evm 0xf50860558A66C7cF0C5bbE44C8f2683A48C22189 10
 ```
