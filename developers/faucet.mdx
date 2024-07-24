@@ -1,0 +1,63 @@
+---
+title: 'Faucet'
+icon: "faucet"
+---
+
+In this section we will tell how you can get free devnet NZTs on Nexis Devnet for testing / building dApps:
+
+<CardGroup>
+
+  <Card title="Native NZT" icon="terminal" href="#sending-tokens-to-native-address">
+   Native currency of Nexis Native chain
+  </Card>
+
+  <Card title="EVM NZT" icon="link" href="#sending-tokens-to-evm-address">
+   Native currency of EVM layer of Nexis Network
+  </Card>
+
+</CardGroup>
+
+## Prerequisites
+<CardGroup cols={1}>
+
+  <Card title="Command Line Interface" icon="terminal" href="/quickstart">
+   Nexis CLI should be installed for claiming tokens on Native Chain
+  </Card>
+
+</CardGroup>
+
+## Sending tokens to Native Address
+To send transaction to any native address you need address of recipient and the amount to transfer.
+
+```bash
+$ nexis transfer
+error: The following required arguments were not provided:
+    <RECIPIENT_ADDRESS>
+    <AMOUNT>
+
+USAGE:
+    nexis transfer <RECIPIENT_ADDRESS> <AMOUNT> --config <FILEPATH>
+
+For more information try --help
+```
+
+For example: Sending `10 NZTs` to `Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK`
+
+```bash
+nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10
+```
+
+If the recipient doesn't have any tokens, then you will need to pass an additional flag with the above command, like this 
+
+```bash
+nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10 --allow-unfunded-recipient
+```
+
+## Sending tokens to EVM Address
+To send transaction to any evm address you need address of recipient and the amount to transfer.
+
+For example: Sending `10 NZTs` to `0xf50860558A66C7cF0C5bbE44C8f2683A48C22189`
+
+```bash
+nexis evm transfer-to-evm 0xf50860558A66C7cF0C5bbE44C8f2683A48C22189 10
+```

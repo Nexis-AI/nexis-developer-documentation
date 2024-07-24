@@ -62,6 +62,7 @@
     {
       "group": "Developers",
       "pages": [
+        "developers/faucet",
         "developers/make-tx",
         "developers/bridge-evm"
       ]
