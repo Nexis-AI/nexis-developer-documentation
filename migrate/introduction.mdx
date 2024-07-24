@@ -1,0 +1,41 @@
+---
+title: Migration
+description: 'Guide to migrate EVM dApps to Nexis EVM'
+icon: "plane"
+---
+
+Here we will discuss how you can port or move your dApps from any other EVM compatible chain to Nexis Network.
+
+We support Solidity smart contracts, so the first step is to deploy the smart contracts on Nexis Network, to do that you can use either of the two methods.
+
+
+<CardGroup cols={2}>
+  <Card
+    title="Nexis Codebox"
+    icon="code"
+    href="/developers/faucet"
+  >
+    Deploy directly from web
+  </Card>
+    <Card
+    title="Hardhat"
+    icon="stars"
+    href="/validators/introduction"
+  >
+   Deploy using Hardhat project
+  </Card>
+</CardGroup>
+
+## Deploy from CodeBox
+
+You can visit [CodeBox](https://remix.nexis.network) and add your contracts there, deploy directly by connecting Metamask or NexWallet. Make sure you have enough NZT tokens to pay the gas fees.
+
+## Deploy using Hardhat
+
+You can create a Hardhat project and add [Nexis Network Configurations](/development) depending on the network on which you want to deploy contracts. 
+
+Once done, copy the contracts and later use them in the frontend.
+
+## Frontend Integration
+
+Just like other EVM chains, we support Metamask integration, so you can easily add our chain in the configurations of your frontend, add contracts deployed in previous step and Voila! You have migrated dApp from different chain to EVM in just 2 steps!
