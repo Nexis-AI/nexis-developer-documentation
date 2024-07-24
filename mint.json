@@ -64,7 +64,8 @@
         "developers/faucet",
         "developers/make-tx",
         "developers/bridge-evm",
-        "developers/stake"
+        "developers/stake",
+        "developers/monitor"
       ]
     },
     {
@@ -75,7 +76,8 @@
         "validators/rpc-node",
         "validators/system-tuning",
         "validators/setup-validator",
-        "validators/setup-rpc"
+        "validators/setup-rpc",
+        "validators/monitor"
       ]
     },
     {
@@ -91,11 +93,7 @@
     {
       "group": "Migrate",
       "pages": [
-        "validators/introduction",
-        "validators/rpc-node",
-        "validators/system-tuning",
-        "validators/setup-validator",
-        "validators/setup-rpc"
+        "validators/introduction"
       ]
     }
   ],
