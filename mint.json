@@ -56,7 +56,8 @@
         "nexis/whitepaper",
         "nexis/why-nexis",
         "nexis/tokenomics",
-        "nexis/nodesale"
+        "nexis/nodesale",
+        "nexis/zkevm"
       ]
     },
     {
