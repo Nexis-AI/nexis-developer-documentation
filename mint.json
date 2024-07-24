@@ -5,7 +5,7 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
     "primary": "#0D9373",
     "light": "#c5fe4a",
@@ -27,7 +27,7 @@
   ],
   "topbarCtaButton": {
     "name": "Portal",
-    "url": "https://nexis.network"
+    "url": "https://portal.nexis.network"
   },
   "anchors": [
     {
