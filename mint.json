@@ -63,7 +63,8 @@
       "pages": [
         "developers/faucet",
         "developers/make-tx",
-        "developers/bridge-evm"
+        "developers/bridge-evm",
+        "developers/stake"
       ]
     },
     {
