@@ -55,7 +55,6 @@
       "pages": [
         "nexis/whitepaper",
         "nexis/why-nexis",
-        "nexis/tokenomics",
         "nexis/nodesale",
         "nexis/zkevm"
       ]
@@ -86,6 +85,7 @@
       "group": "Ecosystem",
       "pages": [
         "products/nexwallet",
+        "products/portal",
         "products/wallet",
         "products/bridge",
         "products/swap",
