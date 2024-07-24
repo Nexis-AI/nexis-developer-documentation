@@ -62,11 +62,7 @@
     {
       "group": "Developers",
       "pages": [
-        "validators/introduction",
-        "validators/rpc-node",
-        "validators/system-tuning",
-        "validators/setup-validator",
-        "validators/setup-rpc"
+        "developers/make-tx"
       ]
     },
     {

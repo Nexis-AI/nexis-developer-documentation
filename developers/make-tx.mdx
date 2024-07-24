@@ -1,0 +1,54 @@
+---
+title: 'Make Transactions'
+icon: "money-bill-transfer"
+---
+
+In this section we will explain how you can use Nexis CLI to make:
+
+<CardGroup>
+
+  <Card title="Native Transactions" icon="terminal" href="#sending-tokens-to-native-address">
+   Transfering native NZT tokens
+  </Card>
+
+  <Card title="EVM Transactions" icon="link" href="#nexis-zkevm-testnet">
+   Bridging/Sending to EVM Address
+  </Card>
+
+</CardGroup>
+
+## Prerequisites
+<CardGroup cols={1}>
+
+  <Card title="Command Line Interface" icon="terminal" href="/quickstart">
+   Nexis CLI should be installed
+  </Card>
+
+</CardGroup>
+
+## Sending tokens to Native Address
+To send transaction to any native address you need address of recipient and the amount to transfer.
+
+```bash
+$ nexis transfer
+error: The following required arguments were not provided:
+    <RECIPIENT_ADDRESS>
+    <AMOUNT>
+
+USAGE:
+    nexis transfer <RECIPIENT_ADDRESS> <AMOUNT> --config <FILEPATH>
+
+For more information try --help
+```
+
+For example: Sending `10 NZTs` to `Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK`
+
+```bash
+nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10
+```
+
+If the recipient doesn't have any tokens, then you will need to pass an additional flag with the above command, like this 
+
+```bash
+nexis transfer Agw3GE5zZVCWk5RYTm1aGSpuitiiCF3zXLS3gazybZMK 10 --allow-unfunded-recipient
+```
