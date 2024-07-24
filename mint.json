@@ -60,6 +60,26 @@
       ]
     },
     {
+      "group": "Developers",
+      "pages": [
+        "validators/introduction",
+        "validators/rpc-node",
+        "validators/system-tuning",
+        "validators/setup-validator",
+        "validators/setup-rpc"
+      ]
+    },
+    {
+      "group": "Validators",
+      "pages": [
+        "validators/introduction",
+        "validators/rpc-node",
+        "validators/system-tuning",
+        "validators/setup-validator",
+        "validators/setup-rpc"
+      ]
+    },
+    {
       "group": "Ecosystem",
       "pages": [
         "products/nexwallet",
@@ -70,7 +90,7 @@
       ]
     },
     {
-      "group": "Validators",
+      "group": "Migrate",
       "pages": [
         "validators/introduction",
         "validators/rpc-node",
