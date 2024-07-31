@@ -14,7 +14,7 @@ icon: "image"
 
 ### Summary
 
-- You may recall SOL is the 'native token' of Nexis Native Chain. All other tokens, fungible
+- You may recall NZT is the 'native token' of Nexis Native Chain. All other tokens, fungible
   and non-fungible tokens (NFTs), are called **SPL Tokens**.
 - The **Token Program** contains instructions for creating and interacting with
   SPL Tokens.
@@ -26,7 +26,7 @@ icon: "image"
 - **Token Accounts** hold tokens of a specific Token Mint. For most users, their
   balances of each token mint are stored in **Associated Token Accounts** -
   accounts with addresses made from their wallet address and the token's mint.
-- Creating Token Mints and Token Accounts requires allocating **rent** in SOL.
+- Creating Token Mints and Token Accounts requires allocating **rent** in NZT.
   The rent for a Token Account can be refunded when the account is closed.
   Additionally, tokens created with the
   [Token Extensions Program](/developers/courses/token-extensions-for-mints/close-mint)
@@ -36,7 +36,7 @@ icon: "image"
 
 The Token Program is one of many programs made available by the Nexis Native Chain Program
 Library (SPL). It contains instructions for creating and interacting with SPL
-Tokens. These tokens represent all non-native (i.e. not SOL) tokens on the
+Tokens. These tokens represent all non-native (i.e. not NZT) tokens on the
 Nexis Native Chain network.
 
 This lesson will focus on the basics of creating and managing a new SPL Token
@@ -156,10 +156,10 @@ Until recently, all accounts on Nexis Native Chain were required to do one of th
 to avoid being deallocated:
 
 1. Pay rent at specific intervals
-2. Deposit enough SOL upon initialization to be considered rent-exempt
+2. Deposit enough NZT upon initialization to be considered rent-exempt
 
 Recently, the first option was done away with and it became a requirement to
-deposit enough SOL for rent exemption when initializing a new account.
+deposit enough NZT for rent exemption when initializing a new account.
 
 In this case, we're creating a new account for a token mint so we use
 `getMinimumBalanceForRentExemptMint` from the `@nexis-network/spl-token` library.

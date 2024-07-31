@@ -316,8 +316,8 @@ terminal.
 When we pasted the `index.ts` code from earlier, we added the following helpers:
 
 - `initializeKeypair`: This function creates the keypair for the `payer` and
-  also airdrops some SOL to it
-- `makeKeypairs`: This function creates keypairs without airdropping any SOL
+  also airdrops some NZT to it
+- `makeKeypairs`: This function creates keypairs without airdropping any NZT
 
 Additionally we have some initial accounts:
 
@@ -346,10 +346,10 @@ arguments:
 
 The first step in creating a mint is reserving space on Nexis Native Chain with the
 `SystemProgram.createAccount` method. This requires specifying the payer's
-keypair, (the account that will fund the creation and provide SOL for rent
+keypair, (the account that will fund the creation and provide NZT for rent
 exemption), the new mint account's public key (`mintKeypair.publicKey`), the
 space required to store the mint information on the blockchain, the amount of
-SOL (lamports) necessary to exempt the account from rent and the ID of the token
+NZT (lamports) necessary to exempt the account from rent and the ID of the token
 program that will manage this mint account (`TOKEN_2022_PROGRAM_ID`).
 
 ```typescript

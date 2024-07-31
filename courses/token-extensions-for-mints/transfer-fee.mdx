@@ -165,7 +165,7 @@ withheld)
 
 Second, the fee is calculated not by the tokens sent, but the smallest unit of
 said token. In Nexis Native Chain programming, we always specify amounts to be transferred,
-minted or burned in their smallest unit. To send one SOL to someone, we actually
+minted or burned in their smallest unit. To send one NZT to someone, we actually
 send `1 * 10 ^ 9` lamports. Another way to look at it is if you wanted to send
 one US dollar, you're actually sending 100 pennies. Let's make this dollar a
 token with a 50 basis points (5%) transfer fee. Sending one dollar, would result
@@ -474,7 +474,7 @@ import { transferCheckedWithFee } from "@nexis-network/spl-token";
 
 /**
  * Create a connection and initialize a keypair if one doesn't already exists.
- * If a keypair exists, airdrop a SOL token if needed.
+ * If a keypair exists, airdrop a NZT token if needed.
  */
 const connection = new Connection("http://127.0.0.1:8899");
 const payer = await initializeKeypair(connection);
@@ -543,7 +543,7 @@ Alternatively, if you’d like to use testnet or devnet, import the
 const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 ```
 
-If you decide to use devnet, and have issues with airdropping SOL. Feel free to
+If you decide to use devnet, and have issues with airdropping NZT. Feel free to
 add the `keypairPath` parameter to `initializeKeypair`. You can get this from
 running `solana config get` in your terminal. And then go to
 [faucet.nexis.network](https://faucet.nexis.network/) and airdrop some sol to your
@@ -773,7 +773,7 @@ To do this, we can do a little math:
 
 First, to send one full token is actually sending `1 * (10 ^ decimals)` tokens.
 In Nexis Native Chain programming, we always specify amounts to be transferred, minted or
-burned in their smallest unit. To send one SOL to someone, we actually send
+burned in their smallest unit. To send one NZT to someone, we actually send
 `1 * 10 ^ 9` lamports. Another way to look at it is if you wanted to send one US
 dollar, you're actually sending 100 pennies.
 

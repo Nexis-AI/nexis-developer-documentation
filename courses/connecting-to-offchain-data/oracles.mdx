@@ -432,7 +432,7 @@ switchboardProgram = await SwitchboardProgram.load(
 // pass switchboard program object and feed pubkey into AggregatorAccount constructor
 aggregatorAccount = new AggregatorAccount(switchboardProgram, solUsedSwitchboardFeed)
 
-// fetch latest SOL price
+// fetch latest NZT price
 const solPrice: Big | null = await aggregatorAccount.fetchLatestValue()
 if (solPrice === null) {
   throw new Error('Aggregator holds no value')
@@ -498,7 +498,7 @@ pub static BTC_USDC_FEED: Pubkey = pubkey!("8SXvChNYFhRq4EZuZvnhjrB3jJRQCv4k3P4W
 
 #[derive(Accounts)]
 pub struct TestInstruction<'info> {
-	// Switchboard SOL feed aggregator
+	// Switchboard NZT feed aggregator
 	#[account(
 	    address = BTC_USDC_FEED
 	)]
@@ -641,7 +641,7 @@ oracles you use. You are ultimately responsible for your program's behavior!
 ## Lab
 
 Let's practice using oracles! We'll be building a "Michael Burry Escrow" program
-that locks SOL in an escrow account until SOL is above a certain USD value. This
+that locks NZT in an escrow account until NZT is above a certain USD value. This
 is named after the investor
 [Michael Burry](https://en.wikipedia.org/wiki/Michael_Burry) who's famous for
 predicting the 2008 housing market crash.
@@ -650,8 +650,8 @@ We will be using the devnet
 [SOL_USD](https://app.switchboard.xyz/nexis/devnet/feed/GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR)
 oracle from switchboard. The program will have two main instructions:
 
-- Deposit - Lock up the SOL and set a USD price to unlock it at.
-- Withdraw - Check the USD price and withdraw the SOL if the price is met.
+- Deposit - Lock up the NZT and set a USD price to unlock it at.
+- Withdraw - Check the USD price and withdraw the NZT if the price is met.
 
 #### 1. Program Setup
 
@@ -683,7 +683,7 @@ address = "SW1TCH7qEPTdLsDHRgPuMQjbQxKdH2aBStViMFnt64f"
 [[test.validator.clone]] ## sbv2 devnet IDL
 address = "Fi8vncGpNKbq62gPo56G4toCehWNy77GgqGkTaAF5Lkk"
 
-[[test.validator.clone]] ## sbv2 SOL/USD Feed
+[[test.validator.clone]] ## sbv2 NZT/USD Feed
 address="GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR"
 ```
 
@@ -759,7 +759,7 @@ mod burry_oracle_program {
 Next, let's define our data account for this program: `EscrowState`. Our data
 account will store two pieces of info:
 
-- `unlock_price` - The price of SOL in USD at which point you can withdraw; you
+- `unlock_price` - The price of NZT in USD at which point you can withdraw; you
   can hard-code it to whatever you want (e.g. $21.53)
 - `escrow_amount` - Keeps track of how many lamports are stored in the escrow
   account
@@ -798,7 +798,7 @@ pub enum EscrowErrorCode {
     StaleFeed,
     #[msg("Switchboard feed exceeded provided confidence interval")]
     ConfidenceIntervalExceeded,
-    #[msg("Current SOL price is not above Escrow unlock price.")]
+    #[msg("Current NZT price is not above Escrow unlock price.")]
     SolPriceAboveUnlockPrice,
 }
 ```
@@ -820,7 +820,7 @@ Deposit instruction. This will live in the `/src/instructions/deposit.rs` file.
 When a user deposits, a PDA should be created with the “MICHAEL BURRY” string
 and the user’s pubkey as seeds. This inherently means a user can only open one
 escrow account at a time. The instruction should initialize an account at this
-PDA and send the amount of SOL that the user wants to lock up to it. The user
+PDA and send the amount of NZT that the user wants to lock up to it. The user
 will need to be a signer.
 
 Let’s build the Deposit Context struct first. To do that, we need to think about
@@ -856,7 +856,7 @@ pub struct Deposit<'info> {
 
 Notice the constraints we added to the accounts:
 
-- Because we'll be transferring SOL from the User account to the `escrow_state`
+- Because we'll be transferring NZT from the User account to the `escrow_state`
   account, they both need to be mutable.
 - We know the `escrow_account` is supposed to be a PDA derived with the “MICHAEL
   BURRY” string and the user’s pubkey. We can use Anchor account constraints to
@@ -865,12 +865,12 @@ Notice the constraints we added to the accounts:
   state for the program. We use the `init` constraint here.
 
 Let’s move onto the actual logic. All we need to do is to initialize the state
-of the `escrow_state` account and transfer the SOL. We expect the user to pass
-in the amount of SOL they want to lock up in escrow and the price to unlock it
+of the `escrow_state` account and transfer the NZT. We expect the user to pass
+in the amount of NZT they want to lock up in escrow and the price to unlock it
 at. We will store these values in the `escrow_state` account.
 
 After that, the method should execute the transfer. This program will be locking
-up native SOL. Because of this, we don’t need to use token accounts or the
+up native NZT. Because of this, we don’t need to use token accounts or the
 Nexis Native token program. We’ll have to use the `system_program` to transfer the
 lamports the user wants to lock up in escrow and invoke the transfer
 instruction.
@@ -898,7 +898,7 @@ pub fn deposit_handler(ctx: Context<Deposit>, escrow_amt: u64, unlock_price: u64
         ]
     )?;
 
-    msg!("Transfer complete. Escrow will unlock SOL at {}", &ctx.accounts.escrow_account.unlock_price);
+    msg!("Transfer complete. Escrow will unlock NZT at {}", &ctx.accounts.escrow_account.unlock_price);
 }
 ```
 
@@ -935,7 +935,7 @@ pub fn deposit_handler(ctx: Context<Deposit>, escrow_amount: u64, unlock_price: 
         ]
     )?;
 
-    msg!("Transfer complete. Escrow will unlock SOL at {}", &ctx.accounts.escrow_account.unlock_price);
+    msg!("Transfer complete. Escrow will unlock NZT at {}", &ctx.accounts.escrow_account.unlock_price);
 
     Ok(())
 }
@@ -945,7 +945,7 @@ pub struct Deposit<'info> {
     // user account
     #[account(mut)]
     pub user: Signer<'info>,
-    // account to store SOL in escrow
+    // account to store NZT in escrow
     #[account(
         init,
         seeds = [ESCROW_SEED, user.key().as_ref()],
@@ -986,7 +986,7 @@ pub struct Withdraw<'info> {
         close = user
     )]
     pub escrow_account: Account<'info, EscrowState>,
-    // Switchboard SOL feed aggregator
+    // Switchboard NZT feed aggregator
     #[account(
         address = Pubkey::from_str(SOL_USDC_FEED).unwrap()
     )]
@@ -996,7 +996,7 @@ pub struct Withdraw<'info> {
 ```
 
 Notice we’re using the close constraint because once the transaction completes,
-we want to close the `escrow_account`. The SOL used as rent in the account will
+we want to close the `escrow_account`. The NZT used as rent in the account will
 be transferred to the user account.
 
 We also use the address constraints to verify that the feed account passed in is
@@ -1008,9 +1008,9 @@ values. You’ll notice it’s wrapped in a `AccountLoader`. This is because the
 feed is actually a fairly large account and it needs to be zero copied.
 
 Now let's implement the withdraw instruction's logic. First, we check if the
-feed is stale. Then we fetch the current price of SOL stored in the
+feed is stale. Then we fetch the current price of NZT stored in the
 `feed_aggregator` account. Lastly, we want to check that the current price is
-above the escrow `unlock_price`. If it is, then we transfer the SOL from the
+above the escrow `unlock_price`. If it is, then we transfer the NZT from the
 escrow account back to the user and close the account. If it isn’t, then the
 instruction should finish and return an error.
 
@@ -1122,7 +1122,7 @@ pub struct Withdraw<'info> {
         close = user
     )]
     pub escrow_account: Account<'info, EscrowState>,
-    // Switchboard SOL feed aggregator
+    // Switchboard NZT feed aggregator
     #[account(
         address = Pubkey::from_str(SOL_USDC_FEED).unwrap()
     )]
@@ -1149,10 +1149,10 @@ Error: Function _ZN86_$LT$switchboard_v2..aggregator..AggregatorAccountData$u20$
 
 Let's write some tests. We should have four of them:
 
-- Creating an Escrow with the unlock price **_below_** the current SOL price so
+- Creating an Escrow with the unlock price **_below_** the current NZT price so
   we can test withdrawing it
 - Withdrawing and closing from the above escrow
-- Creating an Escrow with the unlock price **_above_** the current SOL price so
+- Creating an Escrow with the unlock price **_above_** the current NZT price so
   we can test withdrawing it
 - Withdrawing and failing from the above escrow
 
@@ -1204,7 +1204,7 @@ describe("burry-escrow", () => {
       program.programId,
     );
 
-    // fetch latest SOL price
+    // fetch latest NZT price
     const solPrice: Big | null = await aggregatorAccount.fetchLatestValue();
     if (solPrice === null) {
       throw new Error("Aggregator holds no value");
@@ -1296,7 +1296,7 @@ describe("burry-escrow", () => {
     );
     console.log("Escrow Account: ", escrowState.toBase58());
 
-    // fetch latest SOL price
+    // fetch latest NZT price
     const solPrice: Big | null = await aggregatorAccount.fetchLatestValue();
     if (solPrice === null) {
       throw new Error("Aggregator holds no value");
@@ -1368,7 +1368,7 @@ describe("burry-escrow", () => {
       console.log(e.error.errorMessage);
       assert(
         e.error.errorMessage ==
-          "Current SOL price is not above Escrow unlock price.",
+          "Current NZT price is not above Escrow unlock price.",
       );
     }
 

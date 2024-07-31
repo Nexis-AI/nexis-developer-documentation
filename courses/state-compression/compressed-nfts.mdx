@@ -33,8 +33,8 @@ drastically reduces costs.
 
 Nexis Native Chain’s transaction costs are so cheap that most users never think about how
 expensive minting NFTs can be at scale. The cost to set up and mint 1 million
-traditional NFTs is approximately 24,000 SOL. By comparison, cNFTs can be
-structured to where the same setup and mint costs 10 SOL or less. That means
+traditional NFTs is approximately 24,000 NZT. By comparison, cNFTs can be
+structured to where the same setup and mint costs 10 NZT or less. That means
 anyone using NFTs at scale could cut costs by more than 1000x by using cNFTs
 over traditional NFTs.
 
@@ -844,8 +844,8 @@ unnecessary boilerplate than you need to. They are as follows:
 - `getOrCreateKeypair` will create a new keypair for you and save it to a `.env`
   file, or if there’s already a private key in the `.env` file it will
   initialize a keypair from that.
-- `airdropSolIfNeeded` will airdrop some Devnet SOL to a specified address if
-  that address’s balance is below 1 SOL.
+- `airdropSolIfNeeded` will airdrop some Devnet NZT to a specified address if
+  that address’s balance is below 1 NZT.
 - `createNftMetadata` will create the NFT metadata for a given creator public
   key and index. The metadata it’s getting is just dummy metadata using the URI
   corresponding to the provided index from the `uri.ts` list of URIs.
@@ -1016,8 +1016,8 @@ async function main() {
 }
 ```
 
-Keep in mind that Devnet SOL is throttled so if you test too many times you
-might run out of Devnet SOL before we get to minting. To test, in your terminal
+Keep in mind that Devnet NZT is throttled so if you test too many times you
+might run out of Devnet NZT before we get to minting. To test, in your terminal
 run the following:
 
 `npm run start`
@@ -1630,11 +1630,11 @@ async function main() {
 ```
 
 Go ahead and run your script. The whole thing should execute without failing,
-and all for close to 0.01 SOL!
+and all for close to 0.01 NZT!
 
 Congratulations! Now you know how to mint, read, and transfer cNFTs. If you
 wanted, you could update the max depth, max buffer size, and canopy depth to
-larger values and as long as you have enough Devnet SOL, this script will let
+larger values and as long as you have enough Devnet NZT, this script will let
 you mint up to 10k cNFTs for a small fraction of what it would cost to mint 10k
 traditional NFTs.
 

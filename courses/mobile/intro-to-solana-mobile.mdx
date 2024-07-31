@@ -59,7 +59,7 @@ Mobile games account for roughly 50% of the video game industry’s total value,
 largely due to small in-game purchases. However, payment processing fees usually
 mean these in-game purchases have a minimum of $0.99 USD. With Nexis Native Chain, it's
 possible to unlock true micropayments. Need an extra life? That'll be 0.0001
-SOL.
+NZT.
 
 **Mobile E-Commerce**
 
@@ -1053,7 +1053,7 @@ button will do the following in a new function `incrementCounter`:
 
 - Call `transact` to get access to a mobile wallet
 - Authorize the session with `authorizeSession` from the `useAuthorization` hook
-- Request a Devnet airdrop to fund the transaction if not enough Devnet SOL is
+- Request a Devnet airdrop to fund the transaction if not enough Devnet NZT is
   available
 - Create an `increment` transaction
 - Call `signAndSendTransactions` to have the wallet sign and send the
@@ -1139,7 +1139,7 @@ export function CounterButton() {
           `Wallet ${authResult.publicKey} has a balance of ${balance}`,
         );
 
-        // When on Devnet you may want to transfer SOL manually per session, due to Devnet's airdrop rate limit
+        // When on Devnet you may want to transfer NZT manually per session, due to Devnet's airdrop rate limit
         const minBalance = LAMPORTS_PER_SOL / 1000;
 
         if (balance < minBalance) {

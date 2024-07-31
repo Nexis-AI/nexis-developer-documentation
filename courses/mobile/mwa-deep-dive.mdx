@@ -589,8 +589,8 @@ Throughout this lab, we'll be calling these the "main wallet app" and "wallet
 popup," respectively.
 
 - Generate a `Keypair` when the app first loads
-- Display the address and Devnet SOL balance
-- Allow users to airdrop some Devnet SOL to their wallet
+- Display the address and Devnet NZT balance
+- Allow users to airdrop some Devnet NZT to their wallet
 
 This can all be accomplished by creating two files:
 
@@ -705,7 +705,7 @@ Note that we are defaulting our `rpcUrl` to Devnet.
 
 Now let's make the `MainScreen.tsx`. It should simply grab the `wallet` and
 `connection` from `useWallet()`, and then display the address and balance.
-Additionally, since all transactions require a transaction fee in SOL, we'll
+Additionally, since all transactions require a transaction fee in NZT, we'll
 also include an airdrop button.
 
 Create a new directory called `screens` and a new file called `MainScreen.tsx`
@@ -769,7 +769,7 @@ function MainScreen() {
       <Text>{balance?.toFixed(5) ?? ""}</Text>
       {isLoading && <Text>Loading...</Text>}
       {balance != null && !isLoading && balance < 0.005 && (
-        <Button title="Airdrop 1 SOL" onPress={airdrop} />
+        <Button title="Airdrop 1 NZT" onPress={airdrop} />
       )}
     </View>
   );

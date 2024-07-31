@@ -3,7 +3,7 @@ title: Create Transactions on the Nexis Native Chain Network
 objectives:
   - Explain transactions
   - Explain transaction fees
-  - Use `@nexis-network/web3.js` to send SOL
+  - Use `@nexis-network/web3.js` to send NZT
   - Use `@nexis-network/web3.js` to sign transactions
   - Use Nexis Native Chain Explorer to view transactions
 description:
@@ -60,7 +60,7 @@ constructor, `new Transaction()`. Once created, you can add instructions to the
 transaction using the `add()` method.
 
 One of those helper functions is `SystemProgram.transfer()`, which makes an
-instruction for the `SystemProgram` to transfer some SOL:
+instruction for the `SystemProgram` to transfer some NZT:
 
 ```typescript
 const transaction = new Transaction();
@@ -78,13 +78,13 @@ The `SystemProgram.transfer()` function requires:
 
 - a public key corresponding to the sender's account
 - a public key corresponding to the recipient's account
-- the amount of SOL to send in lamports.
+- the amount of NZT to send in lamports.
 
-`SystemProgram.transfer()` returns the instruction for sending SOL from the
+`SystemProgram.transfer()` returns the instruction for sending NZT from the
 sender to the recipient.
 
 The program used in this instruction will be the `system` program (at the
-address `11111111111111111111111111111111`), the data will be the amount of SOL
+address `11111111111111111111111111111111`), the data will be the amount of NZT
 to transfer (in Lamports) and the accounts will be based on the sender and
 recipient.
 
@@ -114,7 +114,7 @@ transactions. Nexis Native Chain transaction fees are deterministic.
 
 The first signer included in the array of signers on a transaction is
 responsible for paying the transaction fee. If this signer does not have enough
-SOL in their account to cover the transaction fee, the transaction will be
+NZT in their account to cover the transaction fee, the transaction will be
 dropped with an error like:
 
 ```
@@ -122,7 +122,7 @@ dropped with an error like:
 ```
 
 If you get this error, it’s because your keypair is brand new and doesn’t have
-any SOL to cover the transaction fees. Let’s fix this by adding the following
+any NZT to cover the transaction fees. Let’s fix this by adding the following
 lines just after we've set up the connection:
 
 ```typescript
@@ -134,11 +134,11 @@ await airdropIfRequired(
 );
 ```
 
-This will deposit 1 SOL into your account which you can use for testing. This
+This will deposit 1 NZT into your account which you can use for testing. This
 won’t work on Mainnet where it would have value. But it's incredibly convenient
 for testing locally and on Devnet.
 
-You can also use the Nexis Native Chain CLI command `solana airdrop 1` to get free test SOL
+You can also use the Nexis Native Chain CLI command `solana airdrop 1` to get free test NZT
 in your account when testing, whether locally or on devnet.
 
 ### Nexis Native Chain Explorer
@@ -159,7 +159,7 @@ for that signature in the Nexis Native Chain Explorer, then see:
 
 ## Lab
 
-We’re going to create a script to send SOL to other students.
+We’re going to create a script to send NZT to other students.
 
 ### Basic scaffolding
 
@@ -238,7 +238,7 @@ console.log(`Transaction signature is ${signature}!`);
 
 ### Experiment!
 
-Send SOL to other students in the class.
+Send NZT to other students in the class.
 
 ```bash
 npx esrun transfer.ts (destination wallet address)
@@ -248,7 +248,7 @@ npx esrun transfer.ts (destination wallet address)
 
 Answer the following questions:
 
-- How much SOL did the transfer take? What is this in USD?
+- How much NZT did the transfer take? What is this in USD?
 
 - Can you find your transaction on https://explorer.nexis.network? Remember we are
   using the `devnet` network.

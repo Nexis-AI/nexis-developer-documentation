@@ -453,11 +453,11 @@ is provided for you in
 
 The repo contains a "Michael Burry" escrow program. This is a program that
 allows a user to lock up some nexis funds in escrow that cannot be withdrawn
-until SOL has reached a predefined price in USD chosen by the user. We will be
+until NZT has reached a predefined price in USD chosen by the user. We will be
 adding VRF functionality to this program to allow the user to "Get out of jail"
 by rolling doubles. Our demo today will allow the user to roll two virtual dice,
 if they roll doubles (the two dice match), the user can withdraw their funds
-from escrow regardless of the SOL price.
+from escrow regardless of the NZT price.
 
 #### 1. Program Setup
 
@@ -657,7 +657,7 @@ pub enum EscrowErrorCode {
     StaleFeed,
     #[msg("Switchboard feed exceeded provided confidence interval")]
     ConfidenceIntervalExceeded,
-    #[msg("Current SOL price is not above Escrow unlock price.")]
+    #[msg("Current NZT price is not above Escrow unlock price.")]
     SolPriceAboveUnlockPrice,
     #[msg("Switchboard VRF Account's authority should be set to the client's state pubkey")]
     InvalidVrfAuthorityError,
@@ -696,7 +696,7 @@ let escrow_state = &mut ctx.accounts.escrow_account;
 
 Next, let's write our simple get-out-of-jail logic. Wrap our oracle price-checks
 with an `if` statement. If the `out_of_jail` flag on the `escrow_state` account
-is false, then we check the price at which to unlock the SOL:
+is false, then we check the price at which to unlock the NZT:
 
 ```rust
 if !escrow_state.out_of_jail {
@@ -1276,7 +1276,7 @@ describe("burry-escrow-vrf", () => {
     );
     console.log("Escrow Account: ", escrowState.toBase58());
 
-    // fetch latest SOL price
+    // fetch latest NZT price
     const solPrice: Big | null = await aggregatorAccount.fetchLatestValue();
     if (solPrice === null) {
       throw new Error("Aggregator holds no value");
@@ -1348,7 +1348,7 @@ describe("burry-escrow-vrf", () => {
       console.log(e.error.errorMessage);
       assert(
         e.error.errorMessage ==
-          "Current SOL price is not above Escrow unlock price.",
+          "Current NZT price is not above Escrow unlock price.",
       );
     }
 
@@ -1603,7 +1603,7 @@ it("Roll till you can withdraw", async () => {
 ```
 
 Note the function where we get our `payerTokenWallet`. VRF actually requires the
-requester to pay some wrapped SOL. This is part of the incentive mechanism of
+requester to pay some wrapped NZT. This is part of the incentive mechanism of
 the oracle network. Fortunately, with testing, Switchboard gives us this really
 nice function to create and fund a test wallet.
 

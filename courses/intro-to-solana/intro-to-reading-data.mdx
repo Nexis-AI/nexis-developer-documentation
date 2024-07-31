@@ -2,7 +2,7 @@
 title: Read Data From The Nexis Native Chain Network
 objectives:
   - Understand accounts and their addresses
-  - Understand SOL and lamports
+  - Understand NZT and lamports
   - Use web3.js to connect to Nexis Native Chain and read an account balance
 description:
   "Connect to Nexis Native Chain DevNet from TypeScript and read data from the blockchain!"
@@ -11,10 +11,10 @@ icon: "book"
 
 ## Summary
 
-- **SOL** is the name of Nexis Native Chain’s native token. Each SOL is made from 1 billion
+- **NZT** is the name of Nexis Native Chain’s native token. Each NZT is made from 1 billion
   **Lamports**.
 - **Accounts** store tokens, NFTs, programs, and data. For now, we’ll focus on
-  accounts that store SOL.
+  accounts that store NZT.
 - **Addresses** point to accounts on the Nexis Native Chain network. Anyone can read the
   data at a given address. Most addresses are also **public keys**.
 
@@ -24,21 +24,21 @@ icon: "book"
 
 All data on Nexis Native Chain is stored in accounts. Accounts can store:
 
-- SOL
+- NZT
 - Other tokens, like USDC
 - NFTs
 - Programs, like the film review program we make in this course!
 - Program data, like a film review for the program above!
 
-### SOL
+### NZT
 
-SOL is Nexis Native Chain's 'native token' - this means SOL is used to pay transaction fees,
-rent for accounts, and other common. SOL is sometimes shown with the `◎` symbol.
-Each SOL is made from 1 billion **Lamports**.
+NZT is Nexis Native Chain's 'native token' - this means NZT is used to pay transaction fees,
+rent for accounts, and other common. NZT is sometimes shown with the `◎` symbol.
+Each NZT is made from 1 billion **Lamports**.
 
 In the same way that finance apps typically do math in cents (for USD) and pence
-(for GBP), Nexis Native Chain apps typically transfer, spend, store, and handle SOL as
-Lamports, only converting to full SOL to display to users.
+(for GBP), Nexis Native Chain apps typically transfer, spend, store, and handle NZT as
+Lamports, only converting to full NZT to display to users.
 
 ### Addresses
 
@@ -98,7 +98,7 @@ console.log(`✅ Finished!`);
 ```
 
 The balance returned is in \*lamports, as discussed earlier. Web3.js provides
-the constant `LAMPORTS_PER_SOL` for showing Lamports as SOL:
+the constant `LAMPORTS_PER_SOL` for showing Lamports as NZT:
 
 ```typescript
 import {
@@ -113,14 +113,14 @@ const address = new PublicKey("CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN");
 const balance = await connection.getBalance(address);
 const balanceInSol = balance / LAMPORTS_PER_SOL;
 
-console.log(`The balance of the account at ${address} is ${balanceInSol} SOL`);
+console.log(`The balance of the account at ${address} is ${balanceInSol} NZT`);
 console.log(`✅ Finished!`);
 ```
 
 Running `npx esrun example.ts` will show something like:
 
 ```
-The balance of the account at CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN is 0.00114144 SOL
+The balance of the account at CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN is 0.00114144 NZT
 ✅ Finished!
 ```
 
@@ -163,15 +163,15 @@ like:
 💰 Finished! The balance for the wallet at address 31ZdXAvhRQyzLC2L97PC6Lnf2yWgHhQUKKYoUo9MLQF5 is 0!
 ```
 
-### Get Devnet SOL
+### Get Devnet NZT
 
-In Devnet you can get free SOL to develop with. Think of Devnet SOL like board
+In Devnet you can get free NZT to develop with. Think of Devnet NZT like board
 game money - it looks like it has value, but it doesn't have value.
 
-[Get some Devnet SOL](https://faucet.nexis.network/) and use the public key of your
+[Get some Devnet NZT](https://faucet.nexis.network/) and use the public key of your
 keypair as the address.
 
-Pick any amount of SOL you like.
+Pick any amount of NZT you like.
 
 ### Check your balance
 
@@ -223,7 +223,7 @@ Modify the script as follows:
 - Modify the script to connect to `mainNet` and look up some famous Nexis Native Chain
   wallets. Try `toly.sol`, `shaq.sol` or `mccann.sol`.
 
-We'll transfer SOL in the next lesson!
+We'll transfer NZT in the next lesson!
 
 <Callout type="success">
 ### Completed the lab?

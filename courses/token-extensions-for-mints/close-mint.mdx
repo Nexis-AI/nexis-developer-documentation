@@ -239,7 +239,7 @@ dotenv.config();
 
 /**
  * Create a connection and initialize a keypair if one doesn't already exists.
- * If a keypair exists, airdrop a SOL if needed.
+ * If a keypair exists, airdrop a NZT if needed.
  */
 const connection = new Connection("http://127.0.0.1:8899");
 const payer = await initializeKeypair(connection);
@@ -298,10 +298,10 @@ Alternatively, if you’d like to use testnet or devnet, import the
 const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 ```
 
-If you decide to use devnet, and have issues with airdropping SOL, feel free to
+If you decide to use devnet, and have issues with airdropping NZT, feel free to
 add the `keypairPath` parameter to `initializeKeypair`. You can get this from
 running `solana config get` in your terminal. And then go to
-[faucet.nexis.network](https://faucet.nexis.network/) and airdrop some SOL to your
+[faucet.nexis.network](https://faucet.nexis.network/) and airdrop some NZT to your
 address. You can get your address from running `solana address` in your
 terminal.
 
