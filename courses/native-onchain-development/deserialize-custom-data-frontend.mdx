@@ -53,7 +53,7 @@ can be signed for by the program address used to create them.
 PDAs and the data inside them can be consistently found based on the program
 address, bump, and seeds. To find a PDA, the program ID and seeds of the
 developer’s choice (like a string of text) are passed through the
-[`findProgramAddress()`](https://nexis-network.github.io/solana-web3.js/classes/PublicKey.html#findProgramAddress)
+[`findProgramAddress()`](https://nexis-network.github.io/nexis-web3.js/classes/PublicKey.html#findProgramAddress)
 function.
 
 Let's have a look at some examples...
@@ -72,7 +72,10 @@ const [pda, bump] = await findProgramAddress(
 );
 ```
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Global state using a PDA](/public/assets/courses/unboxed/pdas-global-state.svg)
+</div>
 
 ##### Example: program with user-specific data
 
@@ -88,7 +91,10 @@ const [pda, bump] = await web3.PublicKey.findProgramAddress(
 );
 ```
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Per user state](/public/assets/courses/unboxed/pdas-per-user-state.svg)
+</div>
 
 #### Example: program with multiple data items per user
 
@@ -104,7 +110,10 @@ const [pda, bump] = await web3.PublicKey.findProgramAddress(
 );
 ```
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Global state using a PDA](/public/assets/courses/unboxed/pdas-note-taking-program.svg)
+</div>
 
 In this example we can see both Alice and Bob have a note called 'Shopping List'
 but since we use their wallet address as one of the seeds, both these notes can
@@ -182,13 +191,16 @@ skeleton letting users submit movie reviews but the list of reviews is still
 showing mock data. Let’s fix that by fetching the program’s storage accounts and
 deserializing the data stored there.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![movie review frontend](/public/assets/courses/unboxed/movie-reviews-frontend.png)
+</div>
 
 #### 1. Download the starter code
 
 If you didn’t complete the lab from the last lesson or just want to make sure
 that you didn’t miss anything, you can download the
-[starter code](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-serialize-instruction-data).
+[starter code](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-serialize-instruction-data).
 
 The project is a fairly simple Next.js application. It includes the
 `WalletContextProvider` we created in the Wallets lesson, a `Card` component for
@@ -204,7 +216,10 @@ mocks. We’ll be swapping those out for the real deal.
 Remember that to properly interact with a Nexis Native Chain program, you need to know how
 its data is structured. A reminder:
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Ed25519 curve showing Movie Review Program](/public/assets/courses/unboxed/movie-review-program.svg)
+</div>
 
 The program's executable data is in a program account, but individual reviews
 are kept in PDAs. We use `findProgramAddress()` to create a PDA that's unique
@@ -343,7 +358,7 @@ load.
 
 If you need more time with this project to feel comfortable with these concepts,
 have a look at the
-[solution code](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-deserialize-account-data)
+[solution code](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-deserialize-account-data)
 before continuing.
 
 ## Challenge
@@ -354,10 +369,13 @@ network. Now, it's time to fetch and deserialize the program's account data.
 Remember, the Nexis Native Chain program that supports this is at
 `HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf`.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Student Intros frontend](/public/assets/courses/unboxed/student-intros-frontend.png)
+</div>
 
 1. You can build this from scratch or you can
-   [download the starter code](https://github.com/Unboxed-Software/solana-student-intros-frontend/tree/solution-serialize-instruction-data).
+   [download the starter code](https://github.com/Unboxed-Software/nexis-student-intros-frontend/tree/solution-serialize-instruction-data).
 2. Create the account buffer layout in `StudentIntro.ts`. The account data
    contains:
    1. `initialized` as an unsigned, 8-bit integer representing the instruction
@@ -373,7 +391,7 @@ Remember, the Nexis Native Chain program that supports this is at
    network!
 
 If you get really stumped, feel free to
-[check out the solution code](https://github.com/Unboxed-Software/solana-student-intros-frontend/tree/solution-deserialize-account-data).
+[check out the solution code](https://github.com/Unboxed-Software/nexis-student-intros-frontend/tree/solution-deserialize-account-data).
 
 As always, get creative with these challenges and take them beyond the
 instructions if you want!

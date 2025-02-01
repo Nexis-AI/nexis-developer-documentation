@@ -639,7 +639,7 @@ enabled. Let’s add it as a dependency in `programs/compressed-notes/Cargo.toml
 [dependencies]
 anchor-lang = "0.28.0"
 spl-account-compression = { version="0.2.0", features = ["cpi"] }
-solana-program = "1.16.0"
+nexis-program = "1.16.0"
 ```
 
 We’ll be testing locally but we need both the Compression program and the Noop
@@ -665,7 +665,7 @@ id):
 ```rust
 use anchor_lang::{
     prelude::*,
-    solana_program::keccak
+    nexis_program::keccak
 };
 use spl_account_compression::{
     Noop,

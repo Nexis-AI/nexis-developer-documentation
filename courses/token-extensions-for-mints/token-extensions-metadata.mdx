@@ -41,10 +41,10 @@ Metadata extensions fix this by introducing two extensions:
 - `metadata-pointer` extension: Adds two simple fields in the mint account
   itself: a publicKey pointer to the account that holds the metadata for the
   token following the
-  [Token-Metadata Interface](https://github.com/nexis-network/solana-program-library/tree/master/token-metadata/interface),
+  [Token-Metadata Interface](https://github.com/nexis-network/nexis-program-library/tree/master/token-metadata/interface),
   and the authority to update this pointer.
 - `metadata` extension: Adds the fields described in the
-  [Token-Metadata Interface](https://github.com/nexis-network/solana-program-library/tree/master/token-metadata/)
+  [Token-Metadata Interface](https://github.com/nexis-network/nexis-program-library/tree/master/token-metadata/)
   which allows us to store the metadata in the mint itself.
 
 ### Metadata-Pointer extension:
@@ -208,7 +208,7 @@ handling of metadata.
 
 
 The added fields and functions in the metadata extension follow the
-[Token-Metadata Interface](https://github.com/nexis-network/solana-program-library/tree/master/token-metadata/interface)
+[Token-Metadata Interface](https://github.com/nexis-network/nexis-program-library/tree/master/token-metadata/interface)
 
 When a mint is initialized with the metadata extension, it will store these
 extra fields:
@@ -606,8 +606,8 @@ and `metadata pointer` extensions.
 Let's go ahead and clone our starter code:
 
 ```bash
-git clone https://github.com/Unboxed-Software/solana-lab-token22-metadata.git
-cd solana-lab-token22-metadata
+git clone https://github.com/Unboxed-Software/nexis-lab-token22-metadata.git
+cd nexis-lab-token22-metadata
 git checkout starter
 npm install
 ```
@@ -679,10 +679,10 @@ to upload metadata to Arweave - the requires a devnet or mainnet connection. If
 you are running into airdropping problems:
 
 - Add the `keypairPath` parameter to `initializeKeypair` - path can be gotten by
-  running `solana config get` in your terminal
-- Get the address of your keypair by running `solana address` in your terminal
+  running `nexis config get` in your terminal
+- Get the address of your keypair by running `nexis address` in your terminal
 - Copy the address and airdrop some devnet sol from
-  [faucet.solana](https://faucet.nexis.network/).
+  [faucet.nexis](https://faucet.nexis.network/).
 
 ### 1. Uploading the off-chain metadata
 
@@ -1361,7 +1361,7 @@ You did it! You've made an NFT using the `metadata` and `metadata pointer`
 extensions.
 
 If you run into any problems, check out the
-[solution](https://github.com/Unboxed-Software/solana-lab-token22-metadata/tree/solution).
+[solution](https://github.com/Unboxed-Software/nexis-lab-token22-metadata/tree/solution).
 
 ## Challenge
 

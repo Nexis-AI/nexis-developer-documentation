@@ -1,0 +1,282 @@
+---
+title: 'EVM RPC API'
+description: 'Complete documentation for Nexis Network EVM RPC endpoints'
+---
+
+# EVM RPC API Reference
+
+This documentation provides a comprehensive guide to interacting with Nexis Network's EVM RPC endpoints.
+
+## Base URL
+
+```bash
+https://evm.nexis.network
+```
+
+## Authentication
+
+No authentication is required for public endpoints. For higher rate limits, contact support for API key access.
+
+## Standard JSON-RPC Format
+
+All requests should follow the JSON-RPC 2.0 specification:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "method_name",
+  "params": [],
+  "id": 1
+}
+```
+
+## Available Methods
+
+### eth_blockNumber
+
+Returns the current block number.
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "method": "eth_blockNumber",
+  "params": [],
+  "id": 1
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x4b7" // 1207
+}
+```
+
+### eth_getBalance
+
+Returns the balance of an address.
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "method": "eth_getBalance",
+  "params": [
+    "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    "latest"
+  ],
+  "id": 1
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x1234567890" // Balance in wei
+}
+```
+
+### eth_sendRawTransaction
+
+Submits a signed transaction for processing.
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "method": "eth_sendRawTransaction",
+  "params": [
+    "0xf86c0185746a528800825208947b0c9d7ec5ad99ad8ff2c1c87aa4e0a89d0a2e8488016345785d8a0000801ba044ad49de6ac0c43165bad66c08e5a9aa2cd489c2a85f3d0c2bb8c2195fce0bba06e3a0dd09b55979f78835b3b34b2ac8e2c7c3c3718a0e7db3320775667a3e4c"
+  ],
+  "id": 1
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b"
+}
+```
+
+### eth_getTransactionByHash
+
+Returns transaction details by hash.
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "method": "eth_getTransactionByHash",
+  "params": [
+    "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"
+  ],
+  "id": 1
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "blockHash": "0x1d59ff54b1eb26b013ce3cb5fc9dab3705b415a67127a003c3e61eb445bb8df2",
+    "blockNumber": "0x5daf3b",
+    "from": "0xa7d9ddbe1f17865597fbd27ec712455208b6b76d",
+    "gas": "0xc350",
+    "gasPrice": "0x4a817c800",
+    "hash": "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b",
+    "input": "0x68656c6c6f21",
+    "nonce": "0x15",
+    "to": "0xf02c1c8e6114b1dbe8937a39260b5b0a374432bb",
+    "transactionIndex": "0x41",
+    "value": "0xf3dbb76162000",
+    "v": "0x25",
+    "r": "0x1b5e176d927f8e9ab405058b2d2457392da3e20f328b16ddabcebc33eaac5fea",
+    "s": "0x4ba69724e8f69de52f0125ad8b3c5c2cef33019bac3249e2c0a2192766d1721c"
+  }
+}
+```
+
+### eth_call
+
+Executes a new message call immediately without creating a transaction.
+
+```json
+// Request
+{
+  "jsonrpc": "2.0",
+  "method": "eth_call",
+  "params": [
+    {
+      "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      "to": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      "data": "0x70a08231000000000000000000000000742d35Cc6634C0532925a3b844Bc454e4438f44e"
+    },
+    "latest"
+  ],
+  "id": 1
+}
+
+// Response
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}
+```
+
+## Error Codes
+
+| Code | Message | Description |
+|------|---------|-------------|
+| -32700 | Parse error | Invalid JSON |
+| -32600 | Invalid Request | JSON is not a valid request object |
+| -32601 | Method not found | Method does not exist |
+| -32602 | Invalid params | Invalid method parameters |
+| -32603 | Internal error | Internal JSON-RPC error |
+| -32000 to -32099 | Server error | Reserved for implementation-specific errors |
+
+## Rate Limits
+
+- Public endpoints: 10 requests per second
+- Authenticated endpoints: 100 requests per second
+- WebSocket connections: 5 concurrent connections
+
+## WebSocket Support
+
+For real-time updates, use the WebSocket endpoint:
+
+```bash
+wss://ws.evm.nexis.network
+```
+
+### Subscription Example
+
+```javascript
+// Subscribe to new blocks
+{
+  "jsonrpc": "2.0",
+  "method": "eth_subscribe",
+  "params": ["newHeads"],
+  "id": 1
+}
+
+// Unsubscribe
+{
+  "jsonrpc": "2.0",
+  "method": "eth_unsubscribe",
+  "params": ["0x9cef478923ff08bf67fde6c64013158d"],
+  "id": 1
+}
+```
+
+## Code Examples
+
+### Web3.js
+
+```javascript
+const Web3 = require('web3');
+const web3 = new Web3('https://evm.nexis.network');
+
+// Get latest block
+web3.eth.getBlockNumber()
+  .then(console.log);
+
+// Get balance
+web3.eth.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
+  .then(console.log);
+
+// Send transaction
+web3.eth.sendSignedTransaction(signedTx)
+  .on('receipt', console.log);
+```
+
+### ethers.js
+
+```javascript
+const { ethers } = require('ethers');
+const provider = new ethers.providers.JsonRpcProvider('https://evm.nexis.network');
+
+// Get latest block
+async function getBlock() {
+  const block = await provider.getBlockNumber();
+  console.log(block);
+}
+
+// Get balance
+async function getBalance(address) {
+  const balance = await provider.getBalance(address);
+  console.log(ethers.utils.formatEther(balance));
+}
+
+// Send transaction
+async function sendTx(tx) {
+  const wallet = new ethers.Wallet(privateKey, provider);
+  const transaction = await wallet.sendTransaction(tx);
+  await transaction.wait();
+  console.log(transaction.hash);
+}
+```
+
+## Best Practices
+
+1. **Error Handling**
+   - Always implement proper error handling
+   - Check response status codes
+   - Validate response data
+
+2. **Rate Limiting**
+   - Implement exponential backoff
+   - Cache frequently accessed data
+   - Use batch requests when possible
+
+3. **Performance**
+   - Use WebSocket for real-time data
+   - Implement proper connection management
+   - Monitor network latency
+
+4. **Security**
+   - Never expose private keys
+   - Validate all input data
+   - Use HTTPS endpoints only 

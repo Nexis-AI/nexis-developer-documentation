@@ -88,7 +88,7 @@ execution and return a program error.
 
 #### How to create errors
 
-While the `solana_program` crate provides a `ProgramError` enum with a list of
+While the `nexis_program` crate provides a `ProgramError` enum with a list of
 generic errors we can use, it will often be useful to create your own. Your
 custom errors will be able to provide more context and detail while you're
 debugging your code.
@@ -101,7 +101,7 @@ Each error type also has its own `#[error("...")]` notation. This lets you
 provide an error message for each particular error type.
 
 ```rust
-use solana_program::{program_error::ProgramError};
+use nexis_program::{program_error::ProgramError};
 use thiserror::Error;
 
 #[derive(Error)]
@@ -117,7 +117,7 @@ pub enum NoteError {
 #### How to return errors
 
 The compiler expects errors returned by the program to be of type `ProgramError`
-from the `solana_program` crate. That means we won't be able to return our
+from the `nexis_program` crate. That means we won't be able to return our
 custom error unless we have a way to convert it into this type. The following
 implementation handles conversion between our custom error and the
 `ProgramError` type.
@@ -341,7 +341,7 @@ To this:
 let account_len: usize = 1000;
 ```
 
-The [realloc](https://docs.rs/solana-sdk/latest/solana_sdk/account_info/struct.AccountInfo.html#method.realloc) method
+The [realloc](https://docs.rs/nexis-sdk/latest/nexis_sdk/account_info/struct.AccountInfo.html#method.realloc) method
 was just recently enabled by Nexis Native Chain Labs which allows you to dynamically change
 the size of your accounts. We will not be using this method for this lab, but
 it’s something to be aware of.
@@ -389,7 +389,7 @@ errors for each of the above cases.
 
 ```rust
 // inside error.rs
-use solana_program::{program_error::ProgramError};
+use nexis_program::{program_error::ProgramError};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -901,7 +901,7 @@ pub fn update_movie_review(
 We're ready to build and upgrade our program! You can test your program by
 submitting a transaction with the right instruction data. For that, feel free to
 use this
-[frontend](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-update-reviews).
+[frontend](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-update-reviews).
 Remember, to make sure you're testing the right program you'll need to replace
 `MOVIE_REVIEW_PROGRAM_ID` with your program ID in `Form.tsx` and
 `MovieCoordinator.ts`.

@@ -125,13 +125,13 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
 #[cfg(feature = "local-testing")]
 pub mod constants {
-    use solana_program::{pubkey, pubkey::Pubkey};
+    use nexis_program::{pubkey, pubkey::Pubkey};
     pub const USDC_MINT_PUBKEY: Pubkey = pubkey!("WaoKNLQVDyBx388CfjaVeyNbs3MT2mPgAhoCfXyUvg8");
 }
 
 #[cfg(not(feature = "local-testing"))]
 pub mod constants {
-    use solana_program::{pubkey, pubkey::Pubkey};
+    use nexis_program::{pubkey, pubkey::Pubkey};
     pub const USDC_MINT_PUBKEY: Pubkey = pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 }
 
@@ -423,7 +423,7 @@ feature flags.
 #### 1. Starter
 
 Download the starter code from the `starter` branch
-of [this repository](https://github.com/Unboxed-Software/solana-admin-instructions/tree/starter).
+of [this repository](https://github.com/Unboxed-Software/nexis-admin-instructions/tree/starter).
 The code contains a program with a single instruction and a single test in the
 `tests` directory.
 
@@ -479,11 +479,11 @@ local and mainnet builds since that could introduce human error (and is just
 annoying). So we'll create a `local-testing` feature that, when enabled, will
 make the program use our local mint but otherwise use the production USDC mint.
 
-Generate a new keypair by running `solana-keygen grind`. Run the following
+Generate a new keypair by running `nexis-keygen grind`. Run the following
 command to generate a keypair with a public key that begins with "env".
 
 ```
-solana-keygen grind --starts-with env:1
+nexis-keygen grind --starts-with env:1
 ```
 
 Once a keypair is found, you should see an output similar to the following:
@@ -501,7 +501,7 @@ previous step rather than copying the one below.
 
 ```rust
 use anchor_lang::prelude::*;
-use solana_program::{pubkey, pubkey::Pubkey};
+use nexis_program::{pubkey, pubkey::Pubkey};
 mod instructions;
 use instructions::*;
 
@@ -601,7 +601,7 @@ To begin, let's first update the `lib.rs` file to:
 1. Include a `SEED_PROGRAM_CONFIG` constant, which will be used to generate the
    PDA for the program config account.
 2. Include an `ADMIN` constant, which will be used as a constraint when
-   initializing the program config account. Run the `solana address` command to
+   initializing the program config account. Run the `nexis address` command to
    get your address to use as the constant's value.
 3. Include a `state` module that we'll implement shortly.
 4. Include the `initialize_program_config` and `update_program_config`
@@ -610,7 +610,7 @@ To begin, let's first update the `lib.rs` file to:
 
 ```rust
 use anchor_lang::prelude::*;
-use solana_program::{pubkey, pubkey::Pubkey};
+use nexis_program::{pubkey, pubkey::Pubkey};
 mod instructions;
 mod state;
 use instructions::*;
@@ -1024,7 +1024,7 @@ config
 And that's it! You've made the program a lot easier to work with moving forward.
 If you want to take a look at the final solution code you can find it on
 the `solution` branch
-of [the same repository](https://github.com/Unboxed-Software/solana-admin-instructions/tree/solution).
+of [the same repository](https://github.com/Unboxed-Software/nexis-admin-instructions/tree/solution).
 
 ## Challenge
 
@@ -1034,7 +1034,7 @@ the lab's `initialize_program_config` so that only the upgrade authority can
 call it rather than having a hardcoded `ADMIN`.
 
 Note that the `anchor test` command, when run on a local network, starts a new
-test validator using `solana-test-validator`. This test validator uses a
+test validator using `nexis-test-validator`. This test validator uses a
 non-upgradeable loader. The non-upgradeable loader makes it so the program's
 `program_data` account isn't initialized when the validator starts. You'll
 recall from the lesson that this account is how we access the upgrade authority
@@ -1051,7 +1051,7 @@ import { execSync } from "child_process"
 ...
 
 const deploy = () => {
-  const deployCmd = `solana program deploy --url localhost -v --program-id $(pwd)/target/deploy/config-keypair.json $(pwd)/target/deploy/config.so`
+  const deployCmd = `nexis program deploy --url localhost -v --program-id $(pwd)/target/deploy/config-keypair.json $(pwd)/target/deploy/config.so`
   execSync(deployCmd)
 }
 
@@ -1071,7 +1071,7 @@ anchor test --skip-deploy -- --features "local-testing"
 
 Try doing this on your own, but if you get stuck, feel free to reference the
 `challenge` branch of
-[the same repository](https://github.com/Unboxed-Software/solana-admin-instructions/tree/challenge)
+[the same repository](https://github.com/Unboxed-Software/nexis-admin-instructions/tree/challenge)
 to see one possible solution.
 
 <Callout type="success">

@@ -49,13 +49,13 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #### Download the Nexis Native Chain CLI tools
 
 Next
-[download the Nexis Native Chain CLI tools](https://docs.nexis.network/cli/install-solana-cli-tools).
+[download the Nexis Native Chain CLI tools](https://docs.nexis.network/cli/install-nexis-cli-tools).
 
 ```
 sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
 ```
 
-Afterwards, `solana -V` should show `solana-cli 1.18.x` (any number for `x` is
+Afterwards, `nexis -V` should show `nexis-cli 1.18.x` (any number for `x` is
 fine).
 
 #### Download Anchor
@@ -84,16 +84,16 @@ anchor test
 **The `anchor test` command should complete with no errors or warnings**.
 However you may encounter issues, and we'll fix them below:
 
-##### `package `solana-program v1.18.12` cannot be built because it requires rustc 1.75.0 or newer` error
+##### `package `nexis-program v1.18.12` cannot be built because it requires rustc 1.75.0 or newer` error
 
-Run `cargo add solana-program@"=1.18.x"`, where `x` matches your version of
-`solana-cli`. Then re-run `anchor test`.
+Run `cargo add nexis-program@"=1.18.x"`, where `x` matches your version of
+`nexis-cli`. Then re-run `anchor test`.
 
 ##### `Error: Unable to read keypair file`
 
-Add a keypair to `.config/solana/id.json`. You can either copy a keypair from an
+Add a keypair to `.config/nexis/id.json`. You can either copy a keypair from an
 `.env` file (just the array of numbers) into a file or use the command
-`solana-keygen new --no-bip39-passphrase` to create a new keypair file. Then
+`nexis-keygen new --no-bip39-passphrase` to create a new keypair file. Then
 re-run `anchor test`.
 
 ##### `unused variable: 'ctx'` warning

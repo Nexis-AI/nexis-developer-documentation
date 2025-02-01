@@ -397,12 +397,12 @@ await withdrawWithheldTokensFromMint(
 ### Updating fees
 
 As of right now there is no way to set the transfer fee post
-[creation with the JS library](https://solana.stackexchange.com/questions/7775/spl-token-2022-how-to-modify-transfer-fee-configuration-for-an-existing-mint).
-However you can from the CLI assuming the result of `solana config` wallet is
+[creation with the JS library](https://nexis.stackexchange.com/questions/7775/spl-token-2022-how-to-modify-transfer-fee-configuration-for-an-existing-mint).
+However you can from the CLI assuming the result of `nexis config` wallet is
 the `transferFeeConfigAuthority`:
 
 ```bash
-solana address
+nexis address
 ## The result of ^ needs to be the `transferFeeConfigAuthority`
 spl-token set-transfer-fee <MINT_ID> <FEE_IN_BASIS_POINTS> <MAX_FEE>
 ```
@@ -526,7 +526,7 @@ next step.
 
 For the sake of this guide, we'll be running our own validator node.
 
-In a separate terminal, run the following command: `solana-test-validator`. This
+In a separate terminal, run the following command: `nexis-test-validator`. This
 will run the node and also log out some keys and values. The value we need to
 retrieve and use in our connection is the JSON RPC URL, which in this case is
 `http://127.0.0.1:8899`. We then use that in the connection to specify to use
@@ -545,9 +545,9 @@ const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
 If you decide to use devnet, and have issues with airdropping NZT. Feel free to
 add the `keypairPath` parameter to `initializeKeypair`. You can get this from
-running `solana config get` in your terminal. And then go to
+running `nexis config get` in your terminal. And then go to
 [faucet.nexis.network](https://faucet.nexis.network/) and airdrop some sol to your
-address. You can get your address from running `solana address` in your
+address. You can get your address from running `nexis address` in your
 terminal.
 
 #### 3. Create a mint with transfer fee
@@ -1212,7 +1212,7 @@ You should see the balances after every step of the way.
 
 That's it! We have successfully created a mint with a transfer fee. If you get
 stuck at any point, you can find the working code in the `solution` branch of
-[this repository](https://github.com/Unboxed-Software/solana-lab-transfer-fee/tree/solution).
+[this repository](https://github.com/Unboxed-Software/nexis-lab-transfer-fee/tree/solution).
 
 #### Challenge
 

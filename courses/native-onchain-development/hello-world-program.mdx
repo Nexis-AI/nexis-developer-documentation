@@ -68,11 +68,11 @@ The path to a particular module or item is the name of each step from the crate
 to that module where each is separated by `::`. As an example, let's look at the
 following structure:
 
-1. The base crate is `solana_program`
-2. `solana_program` contains a module named `account_info`
+1. The base crate is `nexis_program`
+2. `nexis_program` contains a module named `account_info`
 3. `account_info` contains a struct named `AccountInfo`
 
-The path to `AccountInfo` would be `solana_program::account_info::AccountInfo`.
+The path to `AccountInfo` would be `nexis_program::account_info::AccountInfo`.
 
 Absent of any other keywords, we would need to reference this entire path to use
 `AccountInfo` in our code.
@@ -84,7 +84,7 @@ file without specifying the full path each time. It's common to see a series of
 `use` commands at the top of a Rust file.
 
 ```rust
-use solana_program::account_info::AccountInfo
+use nexis_program::account_info::AccountInfo
 ```
 
 #### Declaring Functions in Rust
@@ -186,18 +186,18 @@ type of Nexis Native Chain account that store and execute instructions.
 
 #### Nexis Native Chain Program Crate
 
-To write Nexis Native Chain programs with Rust, we use the `solana_program` library crate.
-The `solana_program` crate acts as a standard library for Nexis Native Chain programs. This
+To write Nexis Native Chain programs with Rust, we use the `nexis_program` library crate.
+The `nexis_program` crate acts as a standard library for Nexis Native Chain programs. This
 standard library contains the modules and macros that we'll use to develop our
-Nexis Native Chain programs. If you want to dig deeper into the `solana_program` crate, have
+Nexis Native Chain programs. If you want to dig deeper into the `nexis_program` crate, have
 a look
-[at the `solana_program` crate documentation](https://docs.rs/solana-program/latest/solana_program/index.html).
+[at the `nexis_program` crate documentation](https://docs.rs/nexis-program/latest/nexis_program/index.html).
 
 For a basic program we will need to bring into scope the following items from
-the `solana_program` crate:
+the `nexis_program` crate:
 
 ```rust
-use solana_program::{
+use nexis_program::{
     account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
@@ -250,7 +250,7 @@ Following program execution, the program must return a value of type
 `ProgramResult`. This type is a `Result` where the embedded value of a success
 case is `()` and the embedded value of a failure case is `ProgramError`. `()` is
 an empty value and `ProgramError` is an error type defined in the
-`solana_program` crate.
+`nexis_program` crate.
 
 ...and there you have it - you now know all the things you need for the
 foundations of creating a Nexis Native Chain program using Rust. Let’s practice what we’ve
@@ -267,15 +267,18 @@ the browser.
 Open the [Nexis Native Chain Playground](https://beta.solpg.io/). Next, go ahead and delete
 everything in the default `lib.rs` file and create a Playground wallet.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Gif Nexis Native Chain Playground Create Wallet](/public/assets/courses/unboxed/hello-world-create-wallet.gif)
+</div>
 
 #### 2. Nexis Native Chain Program Crate
 
-First, let's bring into scope everything we’ll need from the `solana_program`
+First, let's bring into scope everything we’ll need from the `nexis_program`
 crate.
 
 ```rust
-use solana_program::{
+use nexis_program::{
     account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
@@ -307,7 +310,7 @@ pub fn process_instruction(
 All together, the “Hello, world!” program will look like this:
 
 ```rust
-use solana_program::{
+use nexis_program::{
     account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
@@ -332,13 +335,16 @@ pub fn process_instruction(
 
 Now let's build and deploy our program using Nexis Native Chain Playground.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Gif Nexis Native Chain Playground Build and Deploy](/public/assets/courses/unboxed/hello-world-build-deploy.gif)
+</div>
 
 #### 5. Invoke Program
 
 Finally, let's invoke our program from the client side. The focus of this lesson
 is to build our Nexis Native Chain program, so we’ve gone ahead and provided
-[the client code to invoke our “Hello, world!” program](https://github.com/Unboxed-Software/solana-hello-world-client)
+[the client code to invoke our “Hello, world!” program](https://github.com/Unboxed-Software/nexis-hello-world-client)
 for you to download.
 
 The code provided includes a `sayHello` helper function that builds and submits
@@ -355,7 +361,10 @@ let programId = new web3.PublicKey("<YOUR_PROGRAM_ID>");
 
 You can locate the program ID on Nexis Native Chain Playground referencing the image below.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Gif Nexis Native Chain Playground Program ID](/public/assets/courses/unboxed/hello-world-program-id.gif)
+</div>
 
 Next, install the Node modules with `npm i`.
 
@@ -369,7 +378,10 @@ Now, go ahead and run `npm start`. This command will:
 Copy the transaction URL printed in the console into your browser. Scroll down
 to see “Hello, world!” under Program Instruction Logs.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Screenshot Nexis Native Chain Explorer Program Log](/public/assets/courses/unboxed/hello-world-program-log.png)
+</div>
 
 Congratulations, you’ve just successfully built and deployed a Nexis Native Chain program!
 

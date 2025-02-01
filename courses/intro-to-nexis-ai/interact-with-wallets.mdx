@@ -143,7 +143,10 @@ point, you can connect with `wallet.connect()`, which will instruct the wallet
 to prompt the user for permission to view their public key and request approval
 for transactions.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![wallet connection prompt](/public/assets/courses/unboxed/wallet-connect-prompt.png)
+</div>
 
 While you could do this in a `useEffect` hook, you’ll usually want to provide
 more sophisticated functionality. For example, you may want users to be able to
@@ -195,7 +198,10 @@ behavior to match the connection status:
 
 ![multi button select wallet option](/public/assets/courses/unboxed/multi-button-select-wallet.png)
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![connect wallet modal](/public/assets/courses/unboxed/connect-wallet-modal.png)
+</div>
 
 ![multi button connect options](/public/assets/courses/unboxed/multi-button-connect.png)
 
@@ -288,7 +294,10 @@ const sendSol = async event => {
 When this function is called, the connected wallet will display the transaction
 for the user’s approval. If approved, then the transaction will be sent.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![wallet transaction approval prompt](/public/assets/courses/unboxed/wallet-transaction-approval-prompt.png)
+</div>
 
 ## Lab
 
@@ -319,7 +328,7 @@ using in this lab.
 ### Download the starter code
 
 Download the
-[starter code for this project](https://github.com/Unboxed-Software/solana-ping-frontend/tree/starter).
+[starter code for this project](https://github.com/Unboxed-Software/nexis-ping-frontend/tree/starter).
 This project is a simple Next.js application. It’s mostly empty except for the
 `AppBar` component. We’ll build the rest throughout this lab.
 
@@ -476,7 +485,7 @@ import { WalletMultiButton } from "@nexisnetwork/wallet-adapter-react-ui";
 export const AppBar: FC = () => {
   return (
     <div className={styles.AppHeader}>
-      <Image src="/solanaLogo.png" height={30} width={200} />
+      <Image src="/nexisLogo.png" height={30} width={200} />
       <span>Wallet-Adapter Example</span>
       <WalletMultiButton />
     </div>
@@ -603,7 +612,7 @@ easily go look at the transaction details. The more you experiment with it, the
 more comfortable you’ll get, so get creative!
 
 You can also download the
-[full source code from this lab](https://github.com/Unboxed-Software/solana-ping-frontend)
+[full source code from this lab](https://github.com/Unboxed-Software/nexis-ping-frontend)
 to understand all of this in context.
 
 ## Challenge
@@ -611,10 +620,13 @@ to understand all of this in context.
 Now it’s your turn to build something independently. Create an application that
 lets a user connect their wallet and send NZT to another account.
 
-![Send NZT App](/public/assets/courses/unboxed/solana-send-sol-app.png)
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
+![Send NZT App](/public/assets/courses/unboxed/nexis-send-sol-app.png)
+</div>
 
 1. You can build this from scratch or you can
-   [download the starter code](https://github.com/Unboxed-Software/solana-send-sol-frontend/tree/starter).
+   [download the starter code](https://github.com/Unboxed-Software/nexis-send-sol-frontend/tree/starter).
 2. Wrap the starter application in the appropriate context providers.
 3. In the form component, set up the transaction and send it to the user’s
    wallet for approval.
@@ -622,7 +634,7 @@ lets a user connect their wallet and send NZT to another account.
    transaction on Nexis Native Explorer or something else that seems cool to you!
 
 If you get really stumped, feel free to
-[check out the solution code](https://github.com/Unboxed-Software/solana-send-sol-frontend/tree/main).
+[check out the solution code](https://github.com/Unboxed-Software/nexis-send-sol-frontend/tree/main).
 
 <Callout type="success">
 ### Completed the lab?

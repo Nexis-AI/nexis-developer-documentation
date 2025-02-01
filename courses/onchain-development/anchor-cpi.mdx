@@ -225,7 +225,7 @@ possible options:
            &[],
            amount,
        )?;
-       solana_program::program::invoke_signed(
+       nexis_program::program::invoke_signed(
            &ix,
            &[
                ctx.accounts.to.clone(),
@@ -244,7 +244,7 @@ We're deep enough into Anchor at this point that it's important to know how to
 create custom errors.
 
 Ultimately, all programs return the same error
-type: [`ProgramError`](https://docs.rs/solana-program/latest/solana_program/program_error/enum.ProgramError.html).
+type: [`ProgramError`](https://docs.rs/nexis-program/latest/nexis_program/program_error/enum.ProgramError.html).
 However, when writing a program using Anchor you can use `AnchorError` as an
 abstraction on top of `ProgramError`. This abstraction provides additional
 information when a program fails, including:

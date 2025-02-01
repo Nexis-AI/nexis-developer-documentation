@@ -138,7 +138,7 @@ integer, or 8 bytes.
 
 You can add up those lengths and then calculate the rent required for that
 amount of space using the `minimum_balance` function from the `rent` module of
-the `solana_program` crate.
+the `nexis_program` crate.
 
 ```rust
 // Calculate account size required for struct NoteState
@@ -326,7 +326,7 @@ mutable reference to the `accounts`.
 
 At that point, instead of using the iterator directly, we pass it to the
 `next_account_info` function from the `account_info` module provided by the
-`solana_program` crate.
+`nexis_program` crate.
 
 For example, the instruction to create a new note in a note-taking program would
 at minimum require the accounts for the user creating the note, a PDA to store
@@ -414,10 +414,10 @@ pub struct MovieAccountState {
 Next, let’s update our `lib.rs` file. First, we’ll bring into scope everything
 we will need to complete our Movie Review program. You can read more about the
 details each item we are using from
-[the `solana_program` crate](https://docs.rs/solana-program/latest/solana_program/).
+[the `nexis_program` crate](https://docs.rs/nexis-program/latest/nexis_program/).
 
 ```rust
-use solana_program::{
+use nexis_program::{
     entrypoint,
     entrypoint::ProgramResult,
     pubkey::Pubkey,
@@ -550,12 +550,15 @@ msg!("state account serialized");
 
 We're ready to build and deploy our program!
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Gif Build and Deploy Program](/public/assets/courses/unboxed/movie-review-pt2-build-deploy.gif)
+</div>
 
 You can test your program by submitting a transaction with the right instruction
 data. For that, feel free to use
-[this script](https://github.com/Unboxed-Software/solana-movie-client) or
-[the frontend](https://github.com/Unboxed-Software/solana-movie-frontend) we
+[this script](https://github.com/Unboxed-Software/nexis-movie-client) or
+[the frontend](https://github.com/Unboxed-Software/nexis-movie-frontend) we
 built in the
 [Deserialize Custom Instruction Data lesson](deserialize-custom-data). In both
 cases, make sure you copy and paste the program ID for your program into the
@@ -590,7 +593,7 @@ taking a name a short message as instruction data, the program should:
    string in each account
 
 You can test your program by building the
-[frontend](https://github.com/Unboxed-Software/solana-student-intros-frontend)
+[frontend](https://github.com/Unboxed-Software/nexis-student-intros-frontend)
 we created in the
 [Page, Order, and Filter Program Data lesson](/content/courses/native-onchain-development/paging-ordering-filtering-data-frontend).
 Remember to replace the program ID in the frontend code with the one you've

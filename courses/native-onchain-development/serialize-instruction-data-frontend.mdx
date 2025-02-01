@@ -35,13 +35,13 @@ icon: "anchor"
 ### Transactions
 
 <Callout type="note">This course requires completing
-[Introduction to Nexis Native Chain](/developers/courses/intro-to-solana) or equivalent
+[Introduction to Nexis Native Chain](/developers/courses/intro-to-nexis-ai) or equivalent
 knowledge. It's also aimed at advanced developers that prefer more control over
 the ease of use and safe defaults Anchor provides. If you're new to developing
 onchain programs you may prefer
 [Anchor](/developers/courses/onchain-development)</Callout>
 
-In [Introduction to Nexis Native Chain](/developers/courses/intro-to-solana) we learned how
+In [Introduction to Nexis Native Chain](/developers/courses/intro-to-nexis-ai) we learned how
 to create transactions with instructions for common Nexis Native Chain programs.
 
 This lessons shows how to create instructions for our own native Nexis Native Chain
@@ -270,11 +270,17 @@ submit a movie review and have it stored on Nexis Native Chain’s network. We�
 app a little bit at a time over the next few lessons, adding new functionality
 each lesson.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Movie review frontend](/public/assets/courses/unboxed/movie-reviews-frontend.png)
+</div>
 
 Here's a quick diagram of the program we'll build:
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Nexis Native Chain stores data items in PDAs, which can be found using their seeds](/public/assets/courses/unboxed/movie-review-program.svg)
+</div>
 
 The public key of the Nexis Native Chain program we’ll use for this application is
 `CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN`.
@@ -282,7 +288,7 @@ The public key of the Nexis Native Chain program we’ll use for this applicatio
 #### 1. Download the starter code
 
 Before we get started, go ahead and download the
-[starter code](https://github.com/Unboxed-Software/solana-movie-frontend/tree/starter).
+[starter code](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/starter).
 
 The project is a fairly simple Next.js application. It includes the
 `WalletContextProvider` we created in the Wallets lesson, a `Card` component for
@@ -547,7 +553,7 @@ successful.
 
 If you need a bit more time with this project to feel comfortable, have a look
 at the complete
-[solution code](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-serialize-instruction-data).
+[solution code](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-serialize-instruction-data).
 
 ## Challenge
 
@@ -555,10 +561,13 @@ Now it’s your turn to build something independently. Create an application tha
 lets students of this course introduce themselves! The Nexis Native Chain program that
 supports this is at `HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf`.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Student Intros frontend](/public/assets/courses/unboxed/student-intros-frontend.png)
+</div>
 
 1. You can build this from scratch or you can
-   [download the starter code](https://github.com/Unboxed-Software/solana-student-intros-frontend/tree/starter).
+   [download the starter code](https://github.com/Unboxed-Software/nexis-student-intros-frontend/tree/starter).
 2. Create the instruction buffer layout in `StudentIntro.ts`. The program
    expects instruction data to contain:
    1. `variant` as an unsigned, 8-bit integer representing the instruction to
@@ -576,7 +585,7 @@ supports this is at `HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf`.
    Explorer to verify that it worked.
 
 If you get stumped, you can
-[check out the solution code](https://github.com/Unboxed-Software/solana-student-intros-frontend/tree/solution-serialize-instruction-data).
+[check out the solution code](https://github.com/Unboxed-Software/nexis-student-intros-frontend/tree/solution-serialize-instruction-data).
 
 Feel free to get creative with these challenges and take them even further. The
 instructions aren't here to hold you back!

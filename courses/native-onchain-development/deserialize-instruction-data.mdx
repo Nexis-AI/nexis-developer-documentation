@@ -437,7 +437,7 @@ Inside lib.rs, we’re going to bring in the following crates and define where
 we’d like our entry point to the program to be with the `entrypoint` macro.
 
 ```rust
-use solana_program::{
+use nexis_program::{
     entrypoint,
     entrypoint::ProgramResult,
     pubkey::Pubkey,
@@ -471,7 +471,7 @@ should have embedded values for `title,` `rating`, and `description`.
 
 ```rust
 use borsh::{BorshDeserialize};
-use solana_program::{program_error::ProgramError};
+use nexis_program::{program_error::ProgramError};
 
 pub enum MovieInstruction {
     AddMovieReview {
@@ -601,8 +601,8 @@ address you can generate a new program ID from the playground before deploying.
 
 You can test your program by submitting a transaction with the right instruction
 data. For that, feel free to use
-[this script](https://github.com/Unboxed-Software/solana-movie-client) or
-[the frontend](https://github.com/Unboxed-Software/solana-movie-frontend) we
+[this script](https://github.com/Unboxed-Software/nexis-movie-client) or
+[the frontend](https://github.com/Unboxed-Software/nexis-movie-frontend) we
 built in the
 [Serialize Custom Instruction Data lesson](serialize-instruction-data). In both
 cases, make sure you copy and paste the program ID for your program into the
@@ -626,7 +626,7 @@ point where you can print the `name` and `message` provided by the user to the
 program logs when the program is invoked.
 
 You can test your program by building the
-[frontend](https://github.com/Unboxed-Software/solana-student-intros-frontend/tree/solution-serialize-instruction-data)
+[frontend](https://github.com/Unboxed-Software/nexis-student-intros-frontend/tree/solution-serialize-instruction-data)
 we created in the
 [Serialize Custom Instruction Data lesson](serialize-instruction-data) and then
 checking the program logs on Nexis Native Chain Explorer. Remember to replace the program ID

@@ -65,6 +65,14 @@
       ]
     },
     {
+      "group": "API Endpoints",
+      "pages": [
+        "API Endpoints/evm-rpc",
+        "API Endpoints/evm-playground",
+        "API Endpoints/native-rpc"
+      ]
+    },
+    {
       "group": "AI Agents",
       "pages": [
         "AI Agents/introduction",
@@ -230,7 +238,8 @@
   ],
   "footerSocials": {
     "x": "https://x.com/Nexis_Network",
-    "github": "https://github.com/nexis-network",
-    "linkedin": "https://www.linkedin.com/company/nexis-network"
+    "github": "https://github.com/nexis-ai",
+    "linkedin": "https://www.linkedin.com/company/nexis-network",
+    "telegram": "https://t.me/Nexis_Network"
   }
 }

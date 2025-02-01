@@ -42,10 +42,10 @@ lesson.
 ### How to make a CPI
 
 CPIs are made using the
-[`invoke`](https://docs.rs/solana-program/1.10.19/solana_program/program/fn.invoke.html)
+[`invoke`](https://docs.rs/nexis-program/1.10.19/nexis_program/program/fn.invoke.html)
 or
-[`invoke_signed`](https://docs.rs/solana-program/1.10.19/solana_program/program/fn.invoke_signed.html)
-function from the `solana_program` crate. You use `invoke` to essentially pass
+[`invoke_signed`](https://docs.rs/nexis-program/1.10.19/nexis_program/program/fn.invoke_signed.html)
+function from the `nexis_program` crate. You use `invoke` to essentially pass
 through the original transaction signature that was passed into your program.
 You use `invoke_signed` to have your program "sign" for its PDAs.
 
@@ -107,8 +107,8 @@ available with helper functions for creating the `Instruction` object. Many
 individuals and organizations create publicly available crates alongside their
 programs that expose these sorts of functions to simplify calling their
 programs. This is similar to the Typescript libraries we've used in this course
-(e.g. [@nexis-network/web3.js](https://nexis-network.github.io/solana-web3.js/),
-[@nexis-network/spl-token](https://nexis-network.github.io/solana-program-library/token/js/)).
+(e.g. [@nexis-network/web3.js](https://nexis-network.github.io/nexis-web3.js/),
+[@nexis-network/spl-token](https://nexis-network.github.io/nexis-program-library/token/js/)).
 For example, in this lesson's lab we'll be using the `spl_token` crate to create
 minting instructions. In all other cases, you'll need to create the
 `Instruction` instance from scratch.
@@ -128,7 +128,7 @@ assert_eq!(v[2], 3);
 ```
 
 The `accounts` field of the `Instruction` struct expects a vector of type
-[`AccountMeta`](https://docs.rs/solana-program/latest/solana_program/instruction/struct.AccountMeta.html).
+[`AccountMeta`](https://docs.rs/nexis-program/latest/nexis_program/instruction/struct.AccountMeta.html).
 The `AccountMeta` struct has the following definition:
 
 ```rust
@@ -142,7 +142,7 @@ pub struct AccountMeta {
 Putting these two pieces together looks like this:
 
 ```rust
-use solana_program::instruction::AccountMeta;
+use nexis_program::instruction::AccountMeta;
 
 vec![
     AccountMeta::new(account1_pubkey, true), // metadata for a writable, signer account
@@ -188,10 +188,10 @@ choosing which of these accounts to copy and send along.
 
 You can copy each `account_info` object that you need to pass into the CPI using
 the
-[`Clone`](https://docs.rs/solana-program/1.10.19/solana_program/account_info/struct.AccountInfo.html#impl-Clone)
-trait that is implemented on the `account_info` struct in the `solana_program`
+[`Clone`](https://docs.rs/nexis-program/1.10.19/nexis_program/account_info/struct.AccountInfo.html#impl-Clone)
+trait that is implemented on the `account_info` struct in the `nexis_program`
 crate. This `Clone` trait returns a copy of the
-[`account_info`](https://docs.rs/solana-program/1.10.19/solana_program/account_info/struct.AccountInfo.html)
+[`account_info`](https://docs.rs/nexis-program/1.10.19/nexis_program/account_info/struct.AccountInfo.html)
 instance.
 
 ```rust
@@ -248,7 +248,7 @@ program to supply the seeds used to generate the address in the `signers_seeds`
 field.
 
 The Nexis Native Chain runtime will internally
-call [`create_program_address`](https://docs.rs/solana-program/1.4.4/solana_program/pubkey/struct.Pubkey.html#method.create_program_address)
+call [`create_program_address`](https://docs.rs/nexis-program/1.4.4/nexis_program/pubkey/struct.Pubkey.html#method.create_program_address)
 using the seeds provided and the `program_id` of the calling program. It can
 then compare the result against the addresses supplied in the instruction. If
 any of the addresses match, then the runtime knows that indeed the program
@@ -360,7 +360,7 @@ forward with this lab.
 To get started, we will be using the final state of the Movie Review program
 from the previous PDA lesson. So, if you just completed that lesson then you’re
 all set and ready to go. If you are just jumping in here, no worries, you can
-[download the starter code here](https://github.com/Unboxed-Software/solana-movie-program/tree/solution-add-comments).
+[download the starter code here](https://github.com/Unboxed-Software/nexis-movie-program/tree/solution-add-comments).
 We'll be using the `solution-add-comments` branch as our starting point.
 
 #### 2. Add dependencies to `Cargo.toml`
@@ -424,7 +424,7 @@ program and the constant `LAMPORTS_PER_SOL` at the top of the file.
 
 ```rust
 // Inside processor.rs
-use solana_program::native_token::LAMPORTS_PER_SOL;
+use nexis_program::native_token::LAMPORTS_PER_SOL;
 use spl_associated_token_account::get_associated_token_address;
 use spl_token::{instruction::initialize_mint, ID as TOKEN_PROGRAM_ID};
 ```
@@ -802,18 +802,18 @@ pub fn initialize_token_mint(program_id: &Pubkey, accounts: &[AccountInfo]) -> P
 
 Now we’re ready to build and deploy our program! You can build the program by
 running `cargo build-bpf` and then running the command that is returned, it
-should look something like `solana program deploy <PATH>`.
+should look something like `nexis program deploy <PATH>`.
 
 Before you can start testing whether or not adding a review or comment sends you
 tokens, you need to initialize the program's token mint. You can use
-[this script](https://github.com/Unboxed-Software/solana-movie-token-client) to
+[this script](https://github.com/Unboxed-Software/nexis-movie-token-client) to
 do that. Once you'd cloned that repository, replace the `PROGRAM_ID` in
 `index.ts` with your program's ID. Then run `npm install` and then `npm start`.
 The script assumes you're deploying to Devnet. If you're deploying locally, then
 make sure to tailor the script accordingly.
 
 Once you've initialized your token mint, you can use the
-[Movie Review frontend](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-add-tokens)
+[Movie Review frontend](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-add-tokens)
 to test adding reviews and comments. Again, the code assumes you're on Devnet so
 please act accordingly.
 
@@ -823,7 +823,7 @@ image since we didn't add any metadata to the token, but you get the idea.
 
 If you need more time with the concepts from this lesson or got stuck along the
 way, feel free to
-[take a look at the solution code](https://github.com/Unboxed-Software/solana-movie-program/tree/solution-add-tokens).
+[take a look at the solution code](https://github.com/Unboxed-Software/nexis-movie-program/tree/solution-add-tokens).
 Note that the solution to this lab is on the `solution-add-tokens` branch.
 
 ## Challenge

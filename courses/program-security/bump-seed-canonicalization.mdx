@@ -16,12 +16,12 @@ icon: "computer-classic"
 ## Summary
 
 - The
-  [**`create_program_address`**](https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.create_program_address)
+  [**`create_program_address`**](https://docs.rs/nexis-program/latest/nexis_program/pubkey/struct.Pubkey.html#method.create_program_address)
   function derives a PDA without searching for the **canonical bump**. This
   means there are multiple valid bumps, all of which will produce different
   addresses.
 - Using
-  [**`find_program_address`**](https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address)
+  [**`find_program_address`**](https://docs.rs/nexis-program/latest/nexis_program/pubkey/struct.Pubkey.html#method.find_program_address)
   ensures that the highest valid bump, or canonical bump, is used for the
   derivation, thus creating a deterministic way to find an address given
   specific seeds.
@@ -48,7 +48,7 @@ icon: "computer-classic"
 
 Bump seeds are a number between 0 and 255, inclusive, used to ensure that an
 address derived using
-[`create_program_address`](https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.create_program_address)
+[`create_program_address`](https://docs.rs/nexis-program/latest/nexis_program/pubkey/struct.Pubkey.html#method.create_program_address)
 is a valid PDA. The **canonical bump** is the highest bump value that produces a
 valid PDA. The standard in Nexis Native Chain is to _always use the canonical bump_ when
 deriving PDAs, both for security and convenience.
@@ -121,7 +121,7 @@ A simple way around this problem is to have the program expect only the
 canonical bump and use `find_program_address` to derive the PDA.
 
 The
-[`find_program_address`](https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address)
+[`find_program_address`](https://docs.rs/nexis-program/latest/nexis_program/pubkey/struct.Pubkey.html#method.find_program_address)
 _always uses the canonical bump_. This function iterates through calling
 `create_program_address`, starting with a bump of 255 and decrementing the bump
 by one with each iteration. As soon as a valid address is found, the function
@@ -298,7 +298,7 @@ rewards on time.
 #### 1. Setup
 
 Start by getting the code on the `starter` branch of
-[this repository](https://github.com/Unboxed-Software/solana-bump-seed-canonicalization/tree/starter).
+[this repository](https://github.com/Unboxed-Software/nexis-bump-seed-canonicalization/tree/starter).
 
 Notice that there are two instructions on the program and a single test in the
 `tests` directory.
@@ -596,7 +596,7 @@ careful to design your program to explicitly use the canonical bump!
 
 If you want to take a look at the final solution code you can find it on the
 `solution` branch of
-[the same repository](https://github.com/Unboxed-Software/solana-bump-seed-canonicalization/tree/solution).
+[the same repository](https://github.com/Unboxed-Software/nexis-bump-seed-canonicalization/tree/solution).
 
 ## Challenge
 

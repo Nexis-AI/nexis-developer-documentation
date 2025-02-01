@@ -50,7 +50,7 @@ fact, the SPL Token Program.
 
 ```rust
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program;
+use anchor_lang::nexis_program;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
@@ -59,7 +59,7 @@ pub mod arbitrary_cpi_insecure {
     use super::*;
 
     pub fn cpi(ctx: Context<Cpi>, amount: u64) -> ProgramResult {
-        solana_program::program::invoke(
+        nexis_program::program::invoke(
             &spl_token::instruction::transfer(
                 ctx.accounts.token_program.key,
                 ctx.accounts.source.key,
@@ -100,7 +100,7 @@ pub fn cpi_secure(ctx: Context<Cpi>, amount: u64) -> ProgramResult {
     if &spl_token::ID != ctx.accounts.token_program.key {
         return Err(ProgramError::IncorrectProgramId);
     }
-    solana_program::program::invoke(
+    nexis_program::program::invoke(
         &spl_token::instruction::transfer(
             ctx.accounts.token_program.key,
             ctx.accounts.source.key,
@@ -130,7 +130,7 @@ crate provides the address of the SPL Token Program.
 
 A simpler way to manage program checks is to use Anchor CPI modules. We learned
 in a
-[previous lesson](https://github.com/Unboxed-Software/solana-course/blob/main/content/anchor-cpi)
+[previous lesson](https://github.com/Unboxed-Software/nexis-course/blob/main/content/anchor-cpi)
 that Anchor can automatically generate CPI modules to make CPIs into the program
 simpler. These modules also enhance security by verifying the public key of the
 program that’s passed into one of its public instructions.
@@ -222,7 +222,7 @@ applied to real tokens.
 #### 1. Setup
 
 We'll start with the `starter` branch of
-[this repository](https://github.com/Unboxed-Software/solana-arbitrary-cpi/tree/starter).
+[this repository](https://github.com/Unboxed-Software/nexis-arbitrary-cpi/tree/starter).
 Clone the repository and then open it on the `starter` branch.
 
 Notice that there are three programs:
@@ -442,7 +442,7 @@ every precaution possible to ensure no vulnerabilities in your program.
 
 If you want to take a look at the final solution code you can find it on the
 `solution` branch of
-[the same repository](https://github.com/Unboxed-Software/solana-arbitrary-cpi/tree/solution).
+[the same repository](https://github.com/Unboxed-Software/nexis-arbitrary-cpi/tree/solution).
 
 ## Challenge
 

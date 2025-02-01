@@ -63,7 +63,10 @@ To create an instance of `Program`, you'll need the following:
 - `Provider` - encapsulates the `Connection` to a Nexis Native Chain cluster and a `Wallet`
 - `ProgramId` - the program’s onchain address
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Anchor structure](/public/assets/courses/unboxed/anchor-client-structure.png)
+</div>
 
 The above image shows how each of these pieces are combined to create a
 `Program` instance. We'll go over each of them individually to get a better idea
@@ -449,7 +452,7 @@ with `npm install` and then run the app with `npm run dev`.
 
 This project is a simple Next.js application. It includes the
 `WalletContextProvider` we created in the
-[Wallets lesson](https://github.com/Unboxed-Software/solana-course/blob/main/content/interact-with-wallets),
+[Wallets lesson](https://github.com/Unboxed-Software/nexis-course/blob/main/content/interact-with-wallets),
 the `idl.json` file for the Counter program, and the `Initialize` and
 `Increment` components we’ll be building throughout this lab. The `programId` of
 the program we’ll be invoking is also included in the starter code.
@@ -621,13 +624,22 @@ At this point, everything should work! You can test the frontend by running
 5. Wait a few seconds and click `Refresh Count`. The count should increment on
    the screen.
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Anchor Frontend Demo](/public/assets/courses/unboxed/anchor-frontend-demo.gif)
+</div>
 
 Feel free to click the links to inspect the program logs from each transaction!
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Initialize Program Log](/public/assets/courses/unboxed/anchor-frontend-initialize.png)
+</div>
 
+<div class="p-2 not-prose relative bg-gray-50/50 rounded-2xl overflow-hidden dark:bg-gray-800/25">
+<div class="absolute inset-0 bg-grid-neutral-200/20 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-white/5 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" style="background-position: 10px 10px;"></div>
 ![Increment Program Log](/public/assets/courses/unboxed/anchor-frontend-increment.png)
+</div>
 
 Congratulations, you now know how to set up a frontend to invoke a Nexis Native Chain
 program using an Anchor IDL.

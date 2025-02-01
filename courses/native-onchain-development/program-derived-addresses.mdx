@@ -323,7 +323,7 @@ how to structure the comment storage using PDA accounts.
 #### 1. Get the starter code
 
 To begin, you can find
-[the movie program starter code](https://github.com/Unboxed-Software/solana-movie-program/tree/starter)
+[the movie program starter code](https://github.com/Unboxed-Software/nexis-movie-program/tree/starter)
 on the `starter` branch.
 
 If you've been following along with the Movie Review labs, you'll notice that
@@ -339,14 +339,14 @@ cargo-build-bpf
 ```
 
 Deploy the program by copying the output of `cargo-build-bpf` and running the
-`solana program deploy` command.
+`nexis program deploy` command.
 
 ```sh
-solana program deploy <PATH>
+nexis program deploy <PATH>
 ```
 
 You can test the program by using the movie review
-[frontend](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-update-reviews)
+[frontend](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-update-reviews)
 and updating the program ID with the one you’ve just deployed. Make sure you use
 the `solution-update-reviews` branch.
 
@@ -843,11 +843,11 @@ pub fn add_comment(
 We're ready to build and deploy our program!
 
 Build the updated program by running `cargo-build-bpf`. Then deploy the program
-by running the `solana program deploy` command printed to the console.
+by running the `nexis program deploy` command printed to the console.
 
 You can test your program by submitting a transaction with the right instruction
 data. You can create your own script or feel free to use
-[this frontend](https://github.com/Unboxed-Software/solana-movie-frontend/tree/solution-add-comments).
+[this frontend](https://github.com/Unboxed-Software/nexis-movie-frontend/tree/solution-add-comments).
 Be sure to use the `solution-add-comments` branch and replace the
 `MOVIE_REVIEW_PROGRAM_ID` in `utils/constants.ts` with your program's ID or the
 frontend won't work with your program.
@@ -859,7 +859,7 @@ previously will show on this frontend due to a data mismatch.
 
 If you need more time with this project to feel comfortable with these concepts,
 have a look at
-the [solution code](https://github.com/Unboxed-Software/solana-movie-program/tree/solution-add-comments)
+the [solution code](https://github.com/Unboxed-Software/nexis-movie-program/tree/solution-add-comments)
 before continuing. Note that the solution code is on the `solution-add-comments`
 branch of the linked repository.
 
@@ -876,11 +876,11 @@ account to store the data onchain. For this challenge you should:
 
 If you haven't been following along with past lessons or haven't saved your work
 from before, feel free to use the starter code on the `starter` branch of
-[this repository](https://github.com/Unboxed-Software/solana-student-intro-program/tree/starter).
+[this repository](https://github.com/Unboxed-Software/nexis-student-intro-program/tree/starter).
 
 Try to do this independently if you can! If you get stuck though, feel free to
 reference the
-[solution code](https://github.com/Unboxed-Software/solana-student-intro-program/tree/solution-add-replies).
+[solution code](https://github.com/Unboxed-Software/nexis-student-intro-program/tree/solution-add-replies).
 Note that the solution code is on the `solution-add-replies` branch and that
 your code may look slightly different.
 

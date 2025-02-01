@@ -95,7 +95,7 @@ communication using WebSockets.
 The rest of this lesson will focus on the MWA interface and functionality rather
 than the low-level mechanisms underpinning inter-app communication. However, if
 you want to know the nitty gritty, read the
-[MWA specs](https://solana-mobile.github.io/mobile-wallet-adapter/spec/spec.html).
+[MWA specs](https://nexis-mobile.github.io/mobile-wallet-adapter/spec/spec.html).
 
 ### How to work with MWA
 
@@ -196,7 +196,7 @@ transact(async (wallet: Web3MobileWallet) => {
 Note that the above example does not handle errors or user rejections. In
 production, it's a good idea to wrap the authorization state and methods with a
 custom `useAuthorization` hook. For reference, we built this
-[in the previous lesson](/content/courses/mobile/intro-to-solana-mobile).
+[in the previous lesson](/content/courses/mobile/intro-to-nexis-ai-mobile).
 
 #### Interact with a wallet
 
@@ -385,7 +385,7 @@ Which response you send would depend on the result of attempting to sign and
 send the transaction.
 
 You can dig into the
-[`walletlib` source](https://github.com/solana-mobile/mobile-wallet-adapter/tree/main/js/packages/mobile-wallet-adapter-walletlib)
+[`walletlib` source](https://github.com/nexis-mobile/mobile-wallet-adapter/tree/main/js/packages/mobile-wallet-adapter-walletlib)
 if you'd like to know all of the types associated with `resolve`.
 
 One final point is that the component used for interacting with `walletlib` also
@@ -428,7 +428,7 @@ app-wallet relationship.
 Before we start programming our wallet, we need to do some setup. You will need
 a React Native development environment and a Nexis Native Chain dApp to test on. If you have
 completed the
-[Basic Nexis Native Chain Mobile lesson](/content/courses/mobile/basic-solana-mobile), both
+[Basic Nexis Native Chain Mobile lesson](/content/courses/mobile/basic-nexis-mobile), both
 of these requirements should be met with the counter app installed on your
 Android device/emulator.
 
@@ -438,13 +438,13 @@ If you _haven't_ completed the last lesson you will need to:
    [Android React Native developer environment](https://reactnative.dev/docs/environment-setup)
    with a device or emulator
 2. Install a
-   [Devnet Nexis Native Chain dApp](https://github.com/Unboxed-Software/solana-react-native-counter.git)
+   [Devnet Nexis Native Chain dApp](https://github.com/Unboxed-Software/nexis-react-native-counter.git)
 
 If you want to install the app from the previous lesson, you can:
 
 ```bash
-git clone https://github.com/Unboxed-Software/solana-react-native-counter.git
-cd solana-react-native-counter
+git clone https://github.com/Unboxed-Software/nexis-react-native-counter.git
+cd nexis-react-native-counter
 git checkout solution
 npm run install
 ```
@@ -491,7 +491,7 @@ cd wallet
 ```
 
 Now, let's install our dependencies. These are the same dependencies from our
-[Introduction to Nexis Native Chain Mobile lab](/content/courses/mobile/intro-to-solana-mobile)
+[Introduction to Nexis Native Chain Mobile lab](/content/courses/mobile/intro-to-nexis-ai-mobile)
 with two additions:
 
 - `@react-native-async-storage/async-storage`: provides access to on-device
@@ -888,7 +888,7 @@ export default ButtonGroup;
 #### 5. Create the wallet popup boilerplate
 
 The wallet popup is what is seen when a Nexis Native Chain dApp sends out an intent for
-`solana-wallet://`. Our wallet will listen for this, establish a connection, and
+`nexis-wallet://`. Our wallet will listen for this, establish a connection, and
 render the popup.
 
 Fortunately, we don't have to implement anything low-level. Nexis Native Chain has done the
@@ -1596,7 +1596,7 @@ the Challenge.
 Nice work! Creating a wallet, even a "fake" version, is no small feat. If you
 got stuck anywhere, make sure to go back through it until you understand what's
 happening. Also, feel free to look through the lab's
-[solution code on the `main` branch](https://github.com/Unboxed-Software/react-native-fake-solana-wallet).
+[solution code on the `main` branch](https://github.com/Unboxed-Software/react-native-fake-nexis-wallet).
 
 ## Challenge
 
@@ -1605,7 +1605,7 @@ request types: `SignMessagesRequest` and `SignTransactionsRequest`.
 
 Try to do this without help as it's great practice, but if you get stuck, check
 out the
-[solution code on the `solution` branch](https://github.com/Unboxed-Software/react-native-fake-solana-wallet/tree/solution).
+[solution code on the `solution` branch](https://github.com/Unboxed-Software/react-native-fake-nexis-wallet/tree/solution).
 
 <Callout type="success">
 ### Completed the lab?
