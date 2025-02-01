@@ -306,7 +306,7 @@ eas login
 
 #### 2. Create the app scaffold
 
-Let’s create our app with the following:
+Let's create our app with the following:
 
 ```bash
 npx create-expo-app -t expo-template-blank-typescript nexis-expo
@@ -559,13 +559,9 @@ touch metro.config.js
 Copy and paste the following into `metro.config.js`:
 
 ```js
-// Import the default Expo Metro config
 const { getDefaultConfig } = require("@expo/metro-config");
-
-// Get the default Expo Metro configuration
 const defaultConfig = getDefaultConfig(__dirname);
 
-// Customize the configuration to include your extra node modules
 defaultConfig.resolver.extraNodeModules = {
   crypto: require.resolve("crypto-browserify"),
   stream: require.resolve("readable-stream"),
@@ -574,7 +570,6 @@ defaultConfig.resolver.extraNodeModules = {
   path: require.resolve("path-browserify"),
 };
 
-// Export the modified configuration
 module.exports = defaultConfig;
 ```
 
@@ -622,7 +617,7 @@ export const useMetaplex = (
     const mwaIdentitySigner: IdentitySigner = {
       publicKey: selectedAccount.publicKey,
       signMessage: async (message: Uint8Array): Promise<Uint8Array> => {
-        return await transact(async (wallet: Web3MobileWallet) => {
+        return await transact(async wallet: Web3MobileWallet) => {
           await authorizeSession(wallet);
 
           const signedMessages = await wallet.signMessages({
@@ -636,7 +631,7 @@ export const useMetaplex = (
       signTransaction: async (
         transaction: Transaction,
       ): Promise<Transaction> => {
-        return await transact(async (wallet: Web3MobileWallet) => {
+        return await transact(async wallet: Web3MobileWallet) => {
           await authorizeSession(wallet);
 
           const signedTransactions = await wallet.signTransactions({
@@ -649,7 +644,7 @@ export const useMetaplex = (
       signAllTransactions: async (
         transactions: Transaction[],
       ): Promise<Transaction[]> => {
-        return transact(async (wallet: Web3MobileWallet) => {
+        return transact(async wallet: Web3MobileWallet) => {
           await authorizeSession(wallet);
           const signedTransactions = await wallet.signTransactions({
             transactions: transactions,
