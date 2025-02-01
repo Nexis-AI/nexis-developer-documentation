@@ -1,0 +1,620 @@
+---
+title: 'Solidity AI Agent Examples'
+description: 'Learn how to implement AI agents using Solidity on Nexis Network'
+---
+
+# Solidity AI Agent Examples
+
+This guide provides practical examples of implementing AI agents using Solidity on Nexis Network.
+
+## Basic AI Agent Implementation
+
+### Agent Registry Contract
+
+This contract manages AI agent registration and basic interactions:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AIAgentRegistry {
+    struct Agent {
+        string name;
+        address owner;
+        string modelType;
+        string status;
+        uint256 lastUpdate;
+    }
+
+    mapping(address => Agent) public agents;
+    event AgentRegistered(address indexed agentAddress, string name);
+    event AgentUpdated(address indexed agentAddress, string status);
+
+    function registerAgent(
+        address agentAddress,
+        string memory name,
+        string memory modelType
+    ) public {
+        require(agents[agentAddress].owner == address(0), "Agent already registered");
+        
+        agents[agentAddress] = Agent({
+            name: name,
+            owner: msg.sender,
+            modelType: modelType,
+            status: "Initialized",
+            lastUpdate: block.timestamp
+        });
+
+        emit AgentRegistered(agentAddress, name);
+    }
+
+    function updateAgentStatus(address agentAddress, string memory newStatus) public {
+        require(agents[agentAddress].owner == msg.sender, "Not agent owner");
+        
+        agents[agentAddress].status = newStatus;
+        agents[agentAddress].lastUpdate = block.timestamp;
+
+        emit AgentUpdated(agentAddress, newStatus);
+    }
+}
+```
+
+## AI-Driven Oracle Implementation
+
+This example shows how to create an AI-powered oracle for providing external data:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AIOracle {
+    struct Prediction {
+        uint256 timestamp;
+        string data;
+        uint256 confidence;
+        bool verified;
+    }
+
+    mapping(uint256 => Prediction) public predictions;
+    uint256 public predictionCount;
+    address public owner;
+    
+    event PredictionMade(uint256 indexed id, string data, uint256 confidence);
+    event PredictionVerified(uint256 indexed id, bool verified);
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
+    function submitPrediction(string memory data, uint256 confidence) public onlyOwner {
+        require(confidence <= 100, "Confidence must be <= 100");
+        
+        predictionCount++;
+        predictions[predictionCount] = Prediction({
+            timestamp: block.timestamp,
+            data: data,
+            confidence: confidence,
+            verified: false
+        });
+
+        emit PredictionMade(predictionCount, data, confidence);
+    }
+
+    function verifyPrediction(uint256 predictionId, bool isCorrect) public onlyOwner {
+        require(predictionId <= predictionCount, "Invalid prediction ID");
+        require(!predictions[predictionId].verified, "Prediction already verified");
+
+        predictions[predictionId].verified = true;
+        
+        emit PredictionVerified(predictionId, isCorrect);
+    }
+}
+```
+
+## Secure Data Sharing for AI Training
+
+This contract implements secure data sharing mechanisms for AI training:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AIDataSharing {
+    struct DataSet {
+        string dataHash;
+        string metadata;
+        address owner;
+        uint256 price;
+        bool isAvailable;
+    }
+
+    struct AccessRequest {
+        address requester;
+        uint256 datasetId;
+        bool approved;
+    }
+
+    mapping(uint256 => DataSet) public datasets;
+    mapping(uint256 => AccessRequest[]) public accessRequests;
+    uint256 public datasetCount;
+
+    event DatasetRegistered(uint256 indexed id, address indexed owner);
+    event AccessRequested(uint256 indexed datasetId, address indexed requester);
+    event AccessGranted(uint256 indexed datasetId, address indexed requester);
+
+    function registerDataset(
+        string memory dataHash,
+        string memory metadata,
+        uint256 price
+    ) public {
+        datasetCount++;
+        datasets[datasetCount] = DataSet({
+            dataHash: dataHash,
+            metadata: metadata,
+            owner: msg.sender,
+            price: price,
+            isAvailable: true
+        });
+
+        emit DatasetRegistered(datasetCount, msg.sender);
+    }
+
+    function requestAccess(uint256 datasetId) public payable {
+        require(datasetId <= datasetCount, "Invalid dataset ID");
+        require(datasets[datasetId].isAvailable, "Dataset not available");
+        require(msg.value >= datasets[datasetId].price, "Insufficient payment");
+
+        accessRequests[datasetId].push(AccessRequest({
+            requester: msg.sender,
+            datasetId: datasetId,
+            approved: false
+        }));
+
+        emit AccessRequested(datasetId, msg.sender);
+    }
+
+    function grantAccess(uint256 datasetId, address requester) public {
+        require(datasets[datasetId].owner == msg.sender, "Not dataset owner");
+        
+        AccessRequest[] storage requests = accessRequests[datasetId];
+        for (uint i = 0; i < requests.length; i++) {
+            if (requests[i].requester == requester && !requests[i].approved) {
+                requests[i].approved = true;
+                emit AccessGranted(datasetId, requester);
+                payable(datasets[datasetId].owner).transfer(datasets[datasetId].price);
+                break;
+            }
+        }
+    }
+}
+```
+
+## Usage Examples
+
+### Registering an AI Agent
+
+```javascript
+const registry = await AIAgentRegistry.deployed();
+await registry.registerAgent(
+    agentAddress,
+    "Predictive Analysis Agent",
+    "LLM"
+);
+```
+
+### Making Oracle Predictions
+
+```javascript
+const oracle = await AIOracle.deployed();
+await oracle.submitPrediction(
+    "Market trend prediction: Upward",
+    85  // 85% confidence
+);
+```
+
+### Sharing Training Data
+
+```javascript
+const dataSharing = await AIDataSharing.deployed();
+await dataSharing.registerDataset(
+    "QmHash...",  // IPFS hash of the dataset
+    "Financial market data 2023",
+    web3.utils.toWei("0.1", "ether")
+);
+```
+
+## Best Practices
+
+<Note>
+When implementing AI agents using Solidity:
+- Always validate inputs thoroughly
+- Implement proper access control
+- Consider gas optimization
+- Handle edge cases gracefully
+</Note>
+
+### Security Considerations
+
+1. **Access Control**
+   - Implement proper ownership mechanisms
+   - Use modifiers for function access control
+   - Validate all inputs
+
+2. **Data Privacy**
+   - Use encryption for sensitive data
+   - Implement proper access management
+   - Consider using zero-knowledge proofs
+
+3. **Gas Optimization**
+   - Batch operations when possible
+   - Optimize storage usage
+   - Use events for logging
+
+## Next Steps
+
+After implementing these basic examples, you can:
+
+1. Extend the functionality with more complex AI features
+2. Implement advanced data processing capabilities
+3. Add more sophisticated access control mechanisms
+
+Continue to the Rust examples section to learn about implementing AI agents using Rust.
+
+## Additional Use Case Examples
+
+### 1. AI-Powered Decentralized Exchange
+
+This example shows how to implement an AI-powered DEX that uses machine learning for price predictions:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AIDex {
+    struct PricePrediction {
+        uint256 timestamp;
+        address tokenA;
+        address tokenB;
+        uint256 predictedPrice;
+        uint256 confidence;
+    }
+
+    struct LiquidityPool {
+        uint256 tokenAReserve;
+        uint256 tokenBReserve;
+        uint256 lastPredictedPrice;
+        uint256 lastUpdateTime;
+    }
+
+    mapping(bytes32 => PricePrediction[]) public predictions;
+    mapping(bytes32 => LiquidityPool) public pools;
+    
+    event PricePredictionMade(address tokenA, address tokenB, uint256 price, uint256 confidence);
+    event SwapExecuted(address tokenA, address tokenB, uint256 amountIn, uint256 amountOut);
+
+    function getPairHash(address tokenA, address tokenB) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked(tokenA, tokenB));
+    }
+
+    function submitPricePrediction(
+        address tokenA,
+        address tokenB,
+        uint256 predictedPrice,
+        uint256 confidence
+    ) external {
+        require(confidence <= 100, "Invalid confidence value");
+        bytes32 pairHash = getPairHash(tokenA, tokenB);
+        
+        predictions[pairHash].push(PricePrediction({
+            timestamp: block.timestamp,
+            tokenA: tokenA,
+            tokenB: tokenB,
+            predictedPrice: predictedPrice,
+            confidence: confidence
+        }));
+
+        emit PricePredictionMade(tokenA, tokenB, predictedPrice, confidence);
+    }
+
+    function executeAIOptimizedSwap(
+        address tokenA,
+        address tokenB,
+        uint256 amountIn
+    ) external returns (uint256 amountOut) {
+        bytes32 pairHash = getPairHash(tokenA, tokenB);
+        LiquidityPool storage pool = pools[pairHash];
+        
+        // Get latest AI prediction
+        PricePrediction[] storage pairPredictions = predictions[pairHash];
+        if (pairPredictions.length > 0) {
+            PricePrediction storage latestPrediction = pairPredictions[pairPredictions.length - 1];
+            
+            // Use AI prediction to optimize swap
+            if (block.timestamp - latestPrediction.timestamp < 1 hours) {
+                // Implement AI-optimized swap logic here
+                amountOut = calculateOptimalAmountOut(
+                    amountIn,
+                    pool.tokenAReserve,
+                    pool.tokenBReserve,
+                    latestPrediction.predictedPrice
+                );
+            }
+        }
+        
+        emit SwapExecuted(tokenA, tokenB, amountIn, amountOut);
+        return amountOut;
+    }
+
+    function calculateOptimalAmountOut(
+        uint256 amountIn,
+        uint256 reserveA,
+        uint256 reserveB,
+        uint256 predictedPrice
+    ) internal pure returns (uint256) {
+        // Implement your AI-driven pricing algorithm here
+        return (amountIn * predictedPrice * reserveB) / (reserveA * 1e18);
+    }
+}
+```
+
+### 2. AI-Driven NFT Valuation System
+
+This example demonstrates an AI system for NFT valuations:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AINFTValuation {
+    struct NFTAttributes {
+        uint256[] visualFeatures;    // Encoded visual features
+        uint256[] marketFeatures;    // Market-related features
+        uint256[] rarityScores;     // Rarity metrics
+    }
+
+    struct Valuation {
+        uint256 estimatedPrice;
+        uint256 confidence;
+        uint256 timestamp;
+        string justification;
+    }
+
+    mapping(address => mapping(uint256 => NFTAttributes)) public nftAttributes;
+    mapping(address => mapping(uint256 => Valuation)) public valuations;
+    
+    event NFTAttributesUpdated(address collection, uint256 tokenId);
+    event ValuationUpdated(address collection, uint256 tokenId, uint256 price);
+
+    function updateNFTAttributes(
+        address collection,
+        uint256 tokenId,
+        uint256[] calldata visualFeatures,
+        uint256[] calldata marketFeatures,
+        uint256[] calldata rarityScores
+    ) external {
+        nftAttributes[collection][tokenId] = NFTAttributes({
+            visualFeatures: visualFeatures,
+            marketFeatures: marketFeatures,
+            rarityScores: rarityScores
+        });
+        
+        emit NFTAttributesUpdated(collection, tokenId);
+    }
+
+    function generateValuation(
+        address collection,
+        uint256 tokenId
+    ) external returns (Valuation memory) {
+        NFTAttributes storage attrs = nftAttributes[collection][tokenId];
+        require(attrs.visualFeatures.length > 0, "No attributes found");
+
+        // AI valuation logic would go here
+        uint256 estimatedPrice = calculateValuation(attrs);
+        uint256 confidence = calculateConfidence(attrs);
+        
+        Valuation memory valuation = Valuation({
+            estimatedPrice: estimatedPrice,
+            confidence: confidence,
+            timestamp: block.timestamp,
+            justification: generateJustification(attrs)
+        });
+        
+        valuations[collection][tokenId] = valuation;
+        emit ValuationUpdated(collection, tokenId, estimatedPrice);
+        
+        return valuation;
+    }
+
+    function calculateValuation(NFTAttributes storage attrs) internal view returns (uint256) {
+        // Implement your AI valuation model here
+        uint256 baseValue = 1 ether;
+        for (uint i = 0; i < attrs.rarityScores.length; i++) {
+            baseValue = baseValue * (100 + attrs.rarityScores[i]) / 100;
+        }
+        return baseValue;
+    }
+
+    function calculateConfidence(NFTAttributes storage attrs) internal view returns (uint256) {
+        // Implement confidence calculation based on available data
+        return 70; // Example: 70% confidence
+    }
+
+    function generateJustification(NFTAttributes storage attrs) internal view returns (string memory) {
+        // Generate human-readable explanation for the valuation
+        return "Valuation based on visual features and market data";
+    }
+}
+```
+
+### 3. AI-Based Governance System
+
+This example shows how to implement AI-assisted DAO governance:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
+
+contract AIGovernance {
+    struct Proposal {
+        uint256 id;
+        string description;
+        uint256 forVotes;
+        uint256 againstVotes;
+        bool executed;
+        mapping(address => bool) hasVoted;
+        AIAnalysis analysis;
+    }
+
+    struct AIAnalysis {
+        uint256 impactScore;        // 0-100 score of proposal impact
+        uint256 riskScore;          // 0-100 risk assessment
+        uint256 confidenceScore;    // AI confidence in analysis
+        string[] potentialOutcomes; // Predicted outcomes
+        string recommendation;      // AI recommendation
+    }
+
+    mapping(uint256 => Proposal) public proposals;
+    uint256 public proposalCount;
+    
+    event ProposalCreated(uint256 indexed id, string description);
+    event ProposalAnalyzed(uint256 indexed id, uint256 impactScore, uint256 riskScore);
+    event VoteCast(uint256 indexed proposalId, address indexed voter, bool support);
+
+    function createProposal(string calldata description) external returns (uint256) {
+        proposalCount++;
+        Proposal storage newProposal = proposals[proposalCount];
+        newProposal.id = proposalCount;
+        newProposal.description = description;
+        
+        emit ProposalCreated(proposalCount, description);
+        return proposalCount;
+    }
+
+    function submitAIAnalysis(
+        uint256 proposalId,
+        uint256 impactScore,
+        uint256 riskScore,
+        uint256 confidenceScore,
+        string[] calldata potentialOutcomes,
+        string calldata recommendation
+    ) external {
+        require(proposalId <= proposalCount, "Invalid proposal");
+        require(impactScore <= 100 && riskScore <= 100, "Invalid scores");
+        
+        Proposal storage proposal = proposals[proposalId];
+        proposal.analysis = AIAnalysis({
+            impactScore: impactScore,
+            riskScore: riskScore,
+            confidenceScore: confidenceScore,
+            potentialOutcomes: potentialOutcomes,
+            recommendation: recommendation
+        });
+        
+        emit ProposalAnalyzed(proposalId, impactScore, riskScore);
+    }
+
+    function castVote(uint256 proposalId, bool support) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.hasVoted[msg.sender], "Already voted");
+        require(!proposal.executed, "Proposal already executed");
+        
+        proposal.hasVoted[msg.sender] = true;
+        
+        if (support) {
+            proposal.forVotes++;
+        } else {
+            proposal.againstVotes++;
+        }
+        
+        emit VoteCast(proposalId, msg.sender, support);
+    }
+
+    function getProposalAnalysis(uint256 proposalId) external view returns (
+        uint256 impactScore,
+        uint256 riskScore,
+        uint256 confidenceScore,
+        string[] memory potentialOutcomes,
+        string memory recommendation
+    ) {
+        AIAnalysis storage analysis = proposals[proposalId].analysis;
+        return (
+            analysis.impactScore,
+            analysis.riskScore,
+            analysis.confidenceScore,
+            analysis.potentialOutcomes,
+            analysis.recommendation
+        );
+    }
+}
+```
+
+### Usage Examples for New Contracts
+
+```javascript
+// Using the AI-Powered DEX
+const aiDex = await AIDex.deployed();
+await aiDex.submitPricePrediction(
+    tokenA.address,
+    tokenB.address,
+    web3.utils.toWei("0.5", "ether"), // predicted price
+    85 // 85% confidence
+);
+
+// Using the NFT Valuation System
+const nftValuation = await AINFTValuation.deployed();
+await nftValuation.updateNFTAttributes(
+    nftCollection.address,
+    tokenId,
+    [1, 2, 3], // visual features
+    [100, 200, 300], // market features
+    [95, 80, 70] // rarity scores
+);
+
+// Using the AI Governance System
+const aiGovernance = await AIGovernance.deployed();
+const proposalId = await aiGovernance.createProposal(
+    "Implement new yield farming strategy"
+);
+await aiGovernance.submitAIAnalysis(
+    proposalId,
+    85, // impact score
+    30, // risk score
+    90, // confidence score
+    ["Increased TVL", "Higher yields", "More user engagement"],
+    "Recommend approval based on positive risk-reward profile"
+);
+```
+
+## Best Practices for Advanced Use Cases
+
+<Note>
+When implementing advanced AI agent use cases:
+- Implement proper input validation for AI model inputs
+- Use appropriate data structures for efficient storage
+- Consider gas costs for complex computations
+- Implement circuit breakers for critical operations
+</Note>
+
+### Security Considerations for Advanced Cases
+
+1. **Data Validation**
+   - Validate all AI model inputs
+   - Implement bounds checking for numerical values
+   - Verify data source authenticity
+
+2. **Access Control**
+   - Implement role-based access control
+   - Use time locks for critical updates
+   - Implement emergency pause functionality
+
+3. **Economic Security**
+   - Implement slippage protection
+   - Use secure price feeds
+   - Implement rate limiting
+
+Continue to the Rust examples section for more advanced use cases implemented in Rust. 

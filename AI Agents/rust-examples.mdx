@@ -1,0 +1,834 @@
+---
+title: 'Rust AI Agent Examples'
+description: 'Learn how to implement AI agents using Rust on Nexis Network'
+---
+
+# Rust AI Agent Examples
+
+This guide demonstrates how to implement AI agents using Rust on Nexis Network.
+
+## Basic AI Agent Implementation
+
+### Agent Contract Structure
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod ai_agent {
+    #[ink(storage)]
+    pub struct AIAgent {
+        owner: AccountId,
+        name: String,
+        model_type: String,
+        status: String,
+        last_update: Timestamp,
+    }
+
+    #[ink(event)]
+    pub struct AgentRegistered {
+        #[ink(topic)]
+        agent: AccountId,
+        name: String,
+    }
+
+    #[ink(event)]
+    pub struct StatusUpdated {
+        #[ink(topic)]
+        agent: AccountId,
+        status: String,
+    }
+
+    impl AIAgent {
+        #[ink(constructor)]
+        pub fn new(name: String, model_type: String) -> Self {
+            let owner = Self::env().caller();
+            let now = Self::env().block_timestamp();
+            
+            Self {
+                owner,
+                name,
+                model_type,
+                status: String::from("Initialized"),
+                last_update: now,
+            }
+        }
+
+        #[ink(message)]
+        pub fn update_status(&mut self, new_status: String) {
+            assert_eq!(self.env().caller(), self.owner, "Not authorized");
+            self.status = new_status.clone();
+            self.last_update = self.env().block_timestamp();
+            
+            self.env().emit_event(StatusUpdated {
+                agent: self.env().account_id(),
+                status: new_status,
+            });
+        }
+    }
+}
+```
+
+## On-Chain AI Model Execution
+
+This example demonstrates a simplified on-chain AI model:
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod simple_ai_model {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct SimpleAIModel {
+        owner: AccountId,
+        weights: Vec<i32>,
+        bias: i32,
+    }
+
+    #[ink(event)]
+    pub struct Prediction {
+        #[ink(topic)]
+        input: Vec<i32>,
+        output: i32,
+    }
+
+    impl SimpleAIModel {
+        #[ink(constructor)]
+        pub fn new(weights: Vec<i32>, bias: i32) -> Self {
+            ink_lang::utils::initialize_contract(|contract: &mut Self| {
+                contract.owner = Self::env().caller();
+                contract.weights = weights;
+                contract.bias = bias;
+            })
+        }
+
+        #[ink(message)]
+        pub fn predict(&self, input: Vec<i32>) -> i32 {
+            assert_eq!(input.len(), self.weights.len(), "Invalid input size");
+            
+            let mut result = self.bias;
+            for i in 0..input.len() {
+                result += input[i] * self.weights[i];
+            }
+
+            self.env().emit_event(Prediction {
+                input: input,
+                output: result,
+            });
+
+            result
+        }
+
+        #[ink(message)]
+        pub fn update_weights(&mut self, new_weights: Vec<i32>) {
+            assert_eq!(self.env().caller(), self.owner, "Not authorized");
+            assert_eq!(new_weights.len(), self.weights.len(), "Invalid weights size");
+            
+            self.weights = new_weights;
+        }
+    }
+}
+```
+
+## Secure Data Sharing Implementation
+
+This contract implements secure data sharing for AI training:
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod ai_data_sharing {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct Dataset {
+        data_hash: Hash,
+        metadata: String,
+        owner: AccountId,
+        price: Balance,
+        is_available: bool,
+    }
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct AccessRequest {
+        requester: AccountId,
+        dataset_id: u32,
+        approved: bool,
+    }
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct AIDataSharing {
+        datasets: ink_storage::Mapping<u32, Dataset>,
+        access_requests: ink_storage::Mapping<(u32, AccountId), AccessRequest>,
+        dataset_count: u32,
+        owner: AccountId,
+    }
+
+    #[ink(event)]
+    pub struct DatasetRegistered {
+        #[ink(topic)]
+        id: u32,
+        #[ink(topic)]
+        owner: AccountId,
+    }
+
+    impl AIDataSharing {
+        #[ink(constructor)]
+        pub fn new() -> Self {
+            ink_lang::utils::initialize_contract(|contract: &mut Self| {
+                contract.owner = Self::env().caller();
+                contract.dataset_count = 0;
+            })
+        }
+
+        #[ink(message)]
+        pub fn register_dataset(
+            &mut self,
+            data_hash: Hash,
+            metadata: String,
+            price: Balance,
+        ) -> u32 {
+            self.dataset_count += 1;
+            let id = self.dataset_count;
+
+            let dataset = Dataset {
+                data_hash,
+                metadata,
+                owner: self.env().caller(),
+                price,
+                is_available: true,
+            };
+
+            self.datasets.insert(id, &dataset);
+
+            self.env().emit_event(DatasetRegistered {
+                id,
+                owner: self.env().caller(),
+            });
+
+            id
+        }
+
+        #[ink(message, payable)]
+        pub fn request_access(&mut self, dataset_id: u32) -> bool {
+            let dataset = self.datasets.get(dataset_id)
+                .expect("Dataset not found");
+            
+            assert!(dataset.is_available, "Dataset not available");
+            assert!(self.env().transferred_value() >= dataset.price, "Insufficient payment");
+
+            let request = AccessRequest {
+                requester: self.env().caller(),
+                dataset_id,
+                approved: false,
+            };
+
+            self.access_requests.insert((dataset_id, self.env().caller()), &request);
+            true
+        }
+    }
+}
+```
+
+## Additional Use Case Examples
+
+### 1. AI-Powered Prediction Market
+
+This example demonstrates a prediction market using AI agents:
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod ai_prediction_market {
+    use ink_storage::traits::SpreadAllocate;
+    
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct Market {
+        question: String,
+        resolution_time: Timestamp,
+        total_stake_yes: Balance,
+        total_stake_no: Balance,
+        outcome: Option<bool>,
+        ai_prediction: Option<AIPrediction>,
+    }
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct AIPrediction {
+        probability_yes: u8,
+        confidence: u8,
+        reasoning: String,
+    }
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct PredictionMarket {
+        markets: ink_storage::Mapping<u32, Market>,
+        market_count: u32,
+        stakes: ink_storage::Mapping<(u32, AccountId), (Balance, bool)>,
+    }
+
+    #[ink(event)]
+    pub struct MarketCreated {
+        #[ink(topic)]
+        market_id: u32,
+        question: String,
+    }
+
+    #[ink(event)]
+    pub struct AIPredictionSubmitted {
+        #[ink(topic)]
+        market_id: u32,
+        probability: u8,
+        confidence: u8,
+    }
+
+    impl PredictionMarket {
+        #[ink(constructor)]
+        pub fn new() -> Self {
+            ink_lang::utils::initialize_contract(|contract: &mut Self| {
+                contract.market_count = 0;
+            })
+        }
+
+        #[ink(message)]
+        pub fn create_market(&mut self, question: String, resolution_time: Timestamp) -> u32 {
+            let market_id = self.market_count + 1;
+            self.market_count = market_id;
+
+            let market = Market {
+                question,
+                resolution_time,
+                total_stake_yes: 0,
+                total_stake_no: 0,
+                outcome: None,
+                ai_prediction: None,
+            };
+
+            self.markets.insert(market_id, &market);
+            self.env().emit_event(MarketCreated {
+                market_id,
+                question: market.question,
+            });
+
+            market_id
+        }
+
+        #[ink(message)]
+        pub fn submit_ai_prediction(
+            &mut self,
+            market_id: u32,
+            probability_yes: u8,
+            confidence: u8,
+            reasoning: String,
+        ) -> bool {
+            let mut market = self.markets.get(market_id).expect("Market not found");
+            assert!(probability_yes <= 100, "Invalid probability");
+            assert!(confidence <= 100, "Invalid confidence");
+
+            market.ai_prediction = Some(AIPrediction {
+                probability_yes,
+                confidence,
+                reasoning,
+            });
+
+            self.markets.insert(market_id, &market);
+            self.env().emit_event(AIPredictionSubmitted {
+                market_id,
+                probability: probability_yes,
+                confidence,
+            });
+
+            true
+        }
+
+        #[ink(message, payable)]
+        pub fn place_bet(&mut self, market_id: u32, bet_yes: bool) -> bool {
+            let mut market = self.markets.get(market_id).expect("Market not found");
+            assert!(market.outcome.is_none(), "Market already resolved");
+            
+            let stake = self.env().transferred_value();
+            assert!(stake > 0, "Stake must be positive");
+
+            if bet_yes {
+                market.total_stake_yes += stake;
+            } else {
+                market.total_stake_no += stake;
+            }
+
+            self.stakes.insert(
+                (market_id, self.env().caller()),
+                &(stake, bet_yes)
+            );
+            self.markets.insert(market_id, &market);
+
+            true
+        }
+    }
+}
+```
+
+### 2. AI-Driven Lending Protocol
+
+This example shows an AI-powered lending risk assessment system:
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod ai_lending {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct LoanApplication {
+        borrower: AccountId,
+        amount: Balance,
+        collateral: Balance,
+        duration: u32,
+        risk_score: Option<RiskAssessment>,
+        status: LoanStatus,
+    }
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct RiskAssessment {
+        score: u8,
+        recommended_rate: u32,
+        collateral_ratio: u32,
+        risk_factors: Vec<String>,
+    }
+
+    #[derive(scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum LoanStatus {
+        Pending,
+        Approved,
+        Rejected,
+        Active,
+        Repaid,
+        Defaulted,
+    }
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct AILending {
+        loans: ink_storage::Mapping<u32, LoanApplication>,
+        loan_count: u32,
+        risk_assessor: AccountId,
+    }
+
+    impl AILending {
+        #[ink(constructor)]
+        pub fn new(risk_assessor: AccountId) -> Self {
+            ink_lang::utils::initialize_contract(|contract: &mut Self| {
+                contract.loan_count = 0;
+                contract.risk_assessor = risk_assessor;
+            })
+        }
+
+        #[ink(message)]
+        pub fn apply_for_loan(
+            &mut self,
+            amount: Balance,
+            duration: u32
+        ) -> u32 {
+            let loan_id = self.loan_count + 1;
+            self.loan_count = loan_id;
+
+            let application = LoanApplication {
+                borrower: self.env().caller(),
+                amount,
+                collateral: 0,
+                duration,
+                risk_score: None,
+                status: LoanStatus::Pending,
+            };
+
+            self.loans.insert(loan_id, &application);
+            loan_id
+        }
+
+        #[ink(message)]
+        pub fn submit_risk_assessment(
+            &mut self,
+            loan_id: u32,
+            score: u8,
+            recommended_rate: u32,
+            collateral_ratio: u32,
+            risk_factors: Vec<String>,
+        ) -> bool {
+            assert_eq!(self.env().caller(), self.risk_assessor, "Unauthorized");
+            let mut loan = self.loans.get(loan_id).expect("Loan not found");
+
+            loan.risk_score = Some(RiskAssessment {
+                score,
+                recommended_rate,
+                collateral_ratio,
+                risk_factors,
+            });
+
+            self.loans.insert(loan_id, &loan);
+            true
+        }
+
+        #[ink(message, payable)]
+        pub fn provide_collateral(&mut self, loan_id: u32) -> bool {
+            let mut loan = self.loans.get(loan_id).expect("Loan not found");
+            assert_eq!(loan.borrower, self.env().caller(), "Not the borrower");
+            
+            loan.collateral = self.env().transferred_value();
+            self.loans.insert(loan_id, &loan);
+            true
+        }
+    }
+}
+```
+
+### 3. AI-Enhanced Automated Market Maker
+
+This example demonstrates an AMM with AI-optimized liquidity management:
+
+```rust
+use ink_lang as ink;
+
+#[ink::contract]
+mod ai_amm {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct AIAMM {
+        token_a_reserve: Balance,
+        token_b_reserve: Balance,
+        total_shares: Balance,
+        shares: ink_storage::Mapping<AccountId, Balance>,
+        ai_parameters: AIParameters,
+    }
+
+    #[derive(scale::Encode, scale::Decode, SpreadAllocate)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct AIParameters {
+        volatility_threshold: u32,
+        min_liquidity_ratio: u32,
+        rebalance_frequency: u32,
+        last_rebalance: Timestamp,
+    }
+
+    #[derive(scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct SwapResult {
+        amount_out: Balance,
+        fee: Balance,
+        price_impact: u32,
+    }
+
+    impl AIAMM {
+        #[ink(constructor)]
+        pub fn new(
+            volatility_threshold: u32,
+            min_liquidity_ratio: u32,
+            rebalance_frequency: u32
+        ) -> Self {
+            ink_lang::utils::initialize_contract(|contract: &mut Self| {
+                contract.token_a_reserve = 0;
+                contract.token_b_reserve = 0;
+                contract.total_shares = 0;
+                contract.ai_parameters = AIParameters {
+                    volatility_threshold,
+                    min_liquidity_ratio,
+                    rebalance_frequency,
+                    last_rebalance: Self::env().block_timestamp(),
+                };
+            })
+        }
+
+        #[ink(message)]
+        pub fn calculate_optimal_swap(
+            &self,
+            amount_in: Balance,
+            is_token_a: bool
+        ) -> SwapResult {
+            let (reserve_in, reserve_out) = if is_token_a {
+                (self.token_a_reserve, self.token_b_reserve)
+            } else {
+                (self.token_b_reserve, self.token_a_reserve)
+            };
+
+            // AI-optimized swap calculation
+            let amount_out = self.compute_amount_out(amount_in, reserve_in, reserve_out);
+            let fee = self.calculate_dynamic_fee(amount_in, reserve_in);
+            let price_impact = self.calculate_price_impact(amount_in, reserve_in);
+
+            SwapResult {
+                amount_out,
+                fee,
+                price_impact,
+            }
+        }
+
+        #[ink(message)]
+        pub fn update_ai_parameters(
+            &mut self,
+            volatility_threshold: u32,
+            min_liquidity_ratio: u32,
+            rebalance_frequency: u32
+        ) -> bool {
+            self.ai_parameters = AIParameters {
+                volatility_threshold,
+                min_liquidity_ratio,
+                rebalance_frequency,
+                last_rebalance: self.env().block_timestamp(),
+            };
+            true
+        }
+
+        fn compute_amount_out(
+            &self,
+            amount_in: Balance,
+            reserve_in: Balance,
+            reserve_out: Balance
+        ) -> Balance {
+            // Implement AI-optimized swap formula
+            let k = reserve_in * reserve_out;
+            let new_reserve_in = reserve_in + amount_in;
+            let new_reserve_out = k / new_reserve_in;
+            reserve_out - new_reserve_out
+        }
+
+        fn calculate_dynamic_fee(
+            &self,
+            amount_in: Balance,
+            reserve_in: Balance
+        ) -> Balance {
+            // Implement dynamic fee calculation based on AI parameters
+            let base_fee = amount_in / 1000; // 0.1% base fee
+            let volatility_multiplier = self.ai_parameters.volatility_threshold as u128;
+            base_fee * volatility_multiplier / 100
+        }
+
+        fn calculate_price_impact(
+            &self,
+            amount_in: Balance,
+            reserve_in: Balance
+        ) -> u32 {
+            // Calculate price impact as percentage
+            ((amount_in * 10000) / reserve_in) as u32
+        }
+    }
+}
+```
+
+## Usage Examples
+
+### Deploying an AI Agent
+
+```rust
+#[ink::test]
+fn test_ai_agent_deployment() {
+    let agent = AIAgent::new(
+        String::from("Predictive Agent"),
+        String::from("LLM")
+    );
+    assert_eq!(agent.status(), String::from("Initialized"));
+}
+```
+
+### Using the AI Model
+
+```rust
+#[ink::test]
+fn test_prediction() {
+    let weights = vec![1, 2, 3];
+    let bias = 1;
+    let model = SimpleAIModel::new(weights, bias);
+    
+    let input = vec![1, 1, 1];
+    let prediction = model.predict(input);
+    assert_eq!(prediction, 7); // (1*1 + 2*1 + 3*1 + 1)
+}
+```
+
+### Usage Examples for New Contracts
+
+```rust
+#[ink::test]
+fn test_prediction_market() {
+    let mut market = PredictionMarket::new();
+    
+    // Create a new market
+    let market_id = market.create_market(
+        String::from("Will ETH price exceed $5000 by end of 2024?"),
+        1735689600000 // Unix timestamp for Dec 31, 2024
+    );
+    
+    // Submit AI prediction
+    market.submit_ai_prediction(
+        market_id,
+        75, // 75% probability of Yes
+        85, // 85% confidence
+        String::from("Based on historical trends and market analysis")
+    );
+}
+
+#[ink::test]
+fn test_ai_lending() {
+    let accounts = ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
+    let mut lending = AILending::new(accounts.alice);
+    
+    // Apply for loan
+    let loan_id = lending.apply_for_loan(
+        1000000, // loan amount
+        30 // duration in days
+    );
+    
+    // Submit risk assessment
+    lending.submit_risk_assessment(
+        loan_id,
+        80, // risk score
+        500, // 5% recommended rate
+        150, // 150% collateral ratio
+        vec![String::from("Good credit history")]
+    );
+}
+
+#[ink::test]
+fn test_ai_amm() {
+    let mut amm = AIAMM::new(
+        50,  // volatility threshold
+        20,  // min liquidity ratio
+        3600 // rebalance frequency (1 hour)
+    );
+    
+    // Calculate optimal swap
+    let result = amm.calculate_optimal_swap(
+        1000000, // amount in
+        true     // is token A
+    );
+    
+    assert!(result.amount_out > 0);
+    assert!(result.fee > 0);
+    assert!(result.price_impact < 1000); // Less than 10%
+}
+```
+
+## Best Practices
+
+<Note>
+When implementing AI agents in Rust:
+- Use proper error handling with `Result` types
+- Implement comprehensive testing
+- Optimize for gas efficiency
+- Follow Rust's ownership and borrowing rules
+</Note>
+
+### Performance Optimization
+
+1. **Storage Optimization**
+   - Use appropriate data structures
+   - Minimize storage operations
+   - Implement efficient data access patterns
+
+2. **Computation Efficiency**
+   - Optimize mathematical operations
+   - Use appropriate data types
+   - Implement batch processing where possible
+
+3. **Gas Optimization**
+   - Minimize storage writes
+   - Use events for logging
+   - Implement efficient algorithms
+
+## Testing and Deployment
+
+### Unit Testing
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[ink::test]
+    fn test_basic_functionality() {
+        let mut agent = AIAgent::new(
+            String::from("Test Agent"),
+            String::from("Test Model")
+        );
+        
+        assert_eq!(agent.status(), String::from("Initialized"));
+        
+        agent.update_status(String::from("Active"));
+        assert_eq!(agent.status(), String::from("Active"));
+    }
+}
+```
+
+### Integration Testing
+
+```rust
+#[ink::test]
+fn test_integration() {
+    // Set up the test environment
+    let mut agent = AIAgent::new(
+        String::from("Integration Test Agent"),
+        String::from("Test Model")
+    );
+    
+    // Test multiple interactions
+    agent.update_status(String::from("Processing"));
+    assert_eq!(agent.status(), String::from("Processing"));
+    
+    // Test events
+    let emitted_events = ink_env::test::recorded_events();
+    assert_eq!(emitted_events.count(), 2); // Constructor + update
+}
+```
+
+## Next Steps
+
+After implementing these examples, consider:
+
+1. Adding more sophisticated AI algorithms
+2. Implementing advanced data processing
+3. Adding cross-contract communication
+4. Enhancing security measures
+
+Continue to the advanced topics section to learn about more complex implementations and optimizations. 
+
+## Best Practices for Advanced Use Cases
+
+<Note>
+When implementing advanced AI agents in Rust:
+- Use appropriate error handling with custom error types
+- Implement comprehensive testing for all edge cases
+- Optimize storage patterns for gas efficiency
+- Use events for important state changes
+</Note>
+
+### Performance Optimization for Complex Systems
+
+1. **Batch Processing**
+   - Implement efficient batch operations
+   - Use appropriate data structures for bulk operations
+   - Optimize memory usage patterns
+
+2. **State Management**
+   - Use appropriate storage patterns
+   - Implement efficient state transitions
+   - Optimize data access patterns
+
+3. **Cross-Contract Communication**
+   - Implement proper error handling
+   - Use asynchronous patterns where appropriate
+   - Optimize cross-contract calls
+
+Continue to the advanced topics section to learn about more sophisticated implementations and optimizations. 

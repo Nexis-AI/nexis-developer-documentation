@@ -1,0 +1,142 @@
+---
+title: 'Setting Up for AI Agent Development'
+description: 'Configure your development environment for building AI agents on Nexis Network'
+---
+
+# Setting Up Your Development Environment
+
+This guide will walk you through setting up your development environment for building AI agents on Nexis Network.
+
+## Prerequisites
+
+<Note>
+Ensure you have the following installed before proceeding:
+- Node.js (v14 or higher)
+- Rust (latest stable version)
+- Solidity compiler (v0.8.0 or higher)
+- Git
+</Note>
+
+## Development Tools
+
+### Essential Tools
+
+1. **Nexis Network CLI**
+```bash
+npm install -g @nexis/cli
+```
+
+2. **Rust Setup for Nexis Network**
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup component add rust-src
+```
+
+3. **Solidity Development Tools**
+```bash
+npm install -g solc
+npm install -g truffle
+```
+
+## Wallet Setup
+
+<Steps>
+  <Step title="Create a Nexis Wallet">
+    Install NexWallet or use the Portal interface
+  </Step>
+  <Step title="Get Test Tokens">
+    Use the Nexis Network faucet to obtain test tokens
+  </Step>
+  <Step title="Configure Development Wallet">
+    Set up your development wallet in your project
+  </Step>
+</Steps>
+
+## IDE Configuration
+
+### VS Code Setup
+
+1. Install recommended extensions:
+- Rust Analyzer
+- Solidity
+- Nexis Network Tools
+
+```json
+{
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "solidity.compileUsingRemoteVersion": "v0.8.17"
+}
+```
+
+## Project Structure
+
+Create a new project with the following structure:
+
+```plaintext
+ai-agent-project/
+├── contracts/
+│   ├── rust/
+│   │   └── src/
+│   └── solidity/
+├── tests/
+├── scripts/
+└── config/
+```
+
+## Configuration Files
+
+### 1. Project Configuration
+
+```json
+{
+  "network": "nexis-testnet",
+  "compiler": {
+    "solidity": "0.8.17",
+    "rust": "1.69.0"
+  }
+}
+```
+
+### 2. Development Environment
+
+Create a `.env` file:
+
+```plaintext
+NEXIS_NETWORK_URL=https://testnet.nexis.network
+PRIVATE_KEY=your_private_key_here
+```
+
+<Warning>
+Never commit your private keys or sensitive information to version control!
+</Warning>
+
+## Testing Environment
+
+1. **Local Testnet**
+```bash
+nexis-test-validator
+```
+
+2. **Test Account Setup**
+```bash
+nexis-keygen new -o test-wallet.json
+```
+
+## Next Steps
+
+Once your development environment is set up, you can proceed to:
+
+1. Explore the Solidity examples for building AI agents
+2. Learn about Rust implementation of AI agents
+3. Dive into advanced topics and optimizations
+
+<CardGroup>
+  <Card title="Solidity Examples" icon="code">
+    View Solidity-based AI agent implementations
+  </Card>
+  <Card title="Rust Examples" icon="gear">
+    Explore Rust-based AI agent development
+  </Card>
+</CardGroup>
+
+Continue to the next section to start building your first AI agent using Solidity. 

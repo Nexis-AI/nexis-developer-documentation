@@ -8,10 +8,10 @@
   "favicon": "/favicon.png",
   "colors": {
     "primary": "#0D9373",
-    "light": "#c5fe4a",
-    "dark": "#0D9373",
+    "light": "#B1FF69",
+    "dark": "#B1FF69",
     "anchors": {
-      "from": "#c5fe4a",
+      "from": "#B1FF69",
       "to": "#0b0a0f"
     }
   },
@@ -65,6 +65,16 @@
       ]
     },
     {
+      "group": "AI Agents",
+      "pages": [
+        "AI Agents/introduction",
+        "AI Agents/setup",
+        "AI Agents/solidity-examples",
+        "AI Agents/rust-examples",
+        "AI Agents/advanced-topics"
+      ]
+    },
+    {
       "group": "Developers",
       "pages": [
         "developers/faucet",
@@ -110,12 +120,12 @@
         {
           "group": "Intro to Nexis Native Chain",
           "pages": [
-            "courses/intro-to-solana/getting-started",
-            "courses/intro-to-solana/intro-to-cryptography",
-            "courses/intro-to-solana/intro-to-reading-data",
-            "courses/intro-to-solana/intro-to-writing-data",
-            "courses/intro-to-solana/intro-to-custom-onchain-programs",
-            "courses/intro-to-solana/interact-with-wallets"
+            "courses/intro-to-nexis-ai/getting-started",
+            "courses/intro-to-nexis-ai/intro-to-cryptography",
+            "courses/intro-to-nexis-ai/intro-to-reading-data",
+            "courses/intro-to-nexis-ai/intro-to-writing-data",
+            "courses/intro-to-nexis-ai/intro-to-custom-onchain-programs",
+            "courses/intro-to-nexis-ai/interact-with-wallets"
           ]
         },
         {
@@ -193,16 +203,14 @@
             "courses/program-security/pda-sharing"
           ]
         },
- 
         {
           "group": "Nexis Mobile Development",
           "pages": [
-            "courses/mobile/intro-to-solana-mobile",
+            "courses/mobile/intro-to-nexis-ai-mobile",
             "courses/mobile/mwa-deep-dive",
-            "courses/mobile/solana-mobile-dApps-with-expo"
+            "courses/mobile/nexis-mobile-dApps-with-expo"
           ]
         },
-      
         {
           "group": "Native onchain program development",
           "pages": [
@@ -217,7 +225,6 @@
             "courses/native-onchain-development/paging-ordering-filtering-data-frontend"
           ]
         }
-        
       ]
     }
   ],
